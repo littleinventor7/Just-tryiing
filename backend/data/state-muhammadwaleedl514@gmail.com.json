@@ -1,0 +1,2846 @@
+{
+  "languages": [
+    {
+      "id": "lang_1782752048514",
+      "name": "German",
+      "units": [
+        {
+          "id": "unit_1782752048530",
+          "name": "1-3 Das ist wichtig!",
+          "lessons": [
+            {
+              "id": "lesson_1782752048538",
+              "name": "Lektion 1-3",
+              "terms": [
+                {
+                  "id": "ai-der-basketball-wx00jw",
+                  "word": "der Basketball",
+                  "partOfSpeech": "Nomen",
+                  "definition": "a ball sport played with a basket",
+                  "example": "Ich mag Basketball.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "كرة السلة",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048497
+                  }
+                },
+                {
+                  "id": "ai-chatten-c8285h",
+                  "word": "chatten",
+                  "partOfSpeech": "Verb",
+                  "definition": "to chat online or by messages",
+                  "example": "Ich chatte gern.",
+                  "synonyms": [
+                    "sprechen",
+                    "schreiben"
+                  ],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "يدردش",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-die-disco-qao55y",
+                  "word": "die Disco",
+                  "partOfSpeech": "Nomen",
+                  "definition": "a disco or club",
+                  "example": "Die Disco ist laut.",
+                  "synonyms": [
+                    "Club"
+                  ],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "ديسكو / حانة",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-der-fu-ball-weegv4",
+                  "word": "der Fußball",
+                  "partOfSpeech": "Nomen",
+                  "definition": "football or soccer",
+                  "example": "Magst du Fußball?",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "كرة القدم",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-das-kino-s4s3qh",
+                  "word": "das Kino",
+                  "partOfSpeech": "Nomen",
+                  "definition": "cinema",
+                  "example": "Das Kino ist groß.",
+                  "synonyms": [
+                    "Filmtheater"
+                  ],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "سينما",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-die-musik-q5ibub",
+                  "word": "die Musik",
+                  "partOfSpeech": "Nomen",
+                  "definition": "music",
+                  "example": "Ich mag Musik.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "موسيقى",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-im-internet-surfen-ub7mrm",
+                  "word": "im Internet surfen",
+                  "partOfSpeech": "Verbphrase",
+                  "definition": "to surf the internet",
+                  "example": "Ich surfe im Internet.",
+                  "synonyms": [
+                    "online sein"
+                  ],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "يتصفح الإنترنت",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-das-tennis-myhpwb",
+                  "word": "das Tennis",
+                  "partOfSpeech": "Nomen",
+                  "definition": "tennis",
+                  "example": "Ja, ich mag Tennis.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "التنس",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-das-theater-46455",
+                  "word": "das Theater",
+                  "partOfSpeech": "Nomen",
+                  "definition": "theater",
+                  "example": "Das Theater ist schön.",
+                  "synonyms": [
+                    "Bühne"
+                  ],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "المسرح",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-hallo--guten-tag--68xi5g",
+                  "word": "Hallo!/Guten Tag!",
+                  "partOfSpeech": "Grußformel",
+                  "definition": "greetings",
+                  "example": "Hallo! Wie geht's?",
+                  "synonyms": [
+                    "Hi"
+                  ],
+                  "antonyms": [
+                    "Tschüss"
+                  ],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "مرحبًا / نهارك سعيد",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-tsch-ss--auf-wiedersehen-3s5ek4",
+                  "word": "Tschüss!/Auf Wiedersehen!",
+                  "partOfSpeech": "Abschiedsformel",
+                  "definition": "ways to say goodbye",
+                  "example": "Auf Wiedersehen!",
+                  "synonyms": [
+                    "Bis bald"
+                  ],
+                  "antonyms": [
+                    "Hallo"
+                  ],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "وداعًا / إلى اللقاء",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-wie-geht-s--9ap278",
+                  "word": "Wie geht's?",
+                  "partOfSpeech": "Frage",
+                  "definition": "How are you?",
+                  "example": "Wie geht's? Gut.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "كيف الحال؟",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-magst-du------iyaa24",
+                  "word": "Magst du ...?",
+                  "partOfSpeech": "Frage",
+                  "definition": "Do you like ...?",
+                  "example": "Magst du Tennis?",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "هل تحب ...؟",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-wie-bitte--noch-einmal-b-2uxwnd",
+                  "word": "Wie bitte?/Noch einmal bitte.",
+                  "partOfSpeech": "Redemittel",
+                  "definition": "asking for repetition",
+                  "example": "Wie bitte? Noch einmal bitte.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "عذرًا؟ / مرة أخرى من فضلك",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-schulf-cher-7zclmn",
+                  "word": "Schulfächer",
+                  "partOfSpeech": "Nomen Plural",
+                  "definition": "school subjects",
+                  "example": "Deutsch, Englisch und Mathematik sind Schulfächer.",
+                  "synonyms": [
+                    "Fächer"
+                  ],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "المواد الدراسية",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-der-montag-wg5gqr",
+                  "word": "der Montag",
+                  "partOfSpeech": "Nomen",
+                  "definition": "Monday",
+                  "example": "Am Montag habe ich Deutsch.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "يوم الاثنين",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-das-wochenende-8yslnq",
+                  "word": "das Wochenende",
+                  "partOfSpeech": "Nomen",
+                  "definition": "weekend",
+                  "example": "Das Wochenende ist schön.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "نهاية الأسبوع",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-der-winter-rt0098",
+                  "word": "der Winter",
+                  "partOfSpeech": "Nomen",
+                  "definition": "winter",
+                  "example": "Im Winter ist es kalt.",
+                  "synonyms": [],
+                  "antonyms": [
+                    "der Sommer"
+                  ],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "الشتاء",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-der-januar-y2zfhe",
+                  "word": "der Januar",
+                  "partOfSpeech": "Nomen",
+                  "definition": "January",
+                  "example": "Im Januar ist Winter.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "يناير",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-die-bratwurst-wzd9iq",
+                  "word": "die Bratwurst",
+                  "partOfSpeech": "Nomen",
+                  "definition": "fried sausage",
+                  "example": "Ich esse gern Bratwurst.",
+                  "synonyms": [
+                    "Wurst"
+                  ],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "النقانق",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-der-k-se-fca3kq",
+                  "word": "der Käse",
+                  "partOfSpeech": "Nomen",
+                  "definition": "cheese",
+                  "example": "Ich esse lieber Käse.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "الجبنة",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-der-tee-pp6idh",
+                  "word": "der Tee",
+                  "partOfSpeech": "Nomen",
+                  "definition": "tea",
+                  "example": "Was kostet der Tee?",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "الشاي",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-die-pizza-q42gbc",
+                  "word": "die Pizza",
+                  "partOfSpeech": "Nomen",
+                  "definition": "pizza",
+                  "example": "Die Pizza kostet 2 Euro.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "بيتزا",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-die-bluse-qbprj7",
+                  "word": "die Bluse",
+                  "partOfSpeech": "Nomen",
+                  "definition": "blouse",
+                  "example": "Die Bluse ist weiß.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "بلوزة",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-der-pullover-utcvk8",
+                  "word": "der Pullover",
+                  "partOfSpeech": "Nomen",
+                  "definition": "sweater",
+                  "example": "Der Pullover ist blau.",
+                  "synonyms": [
+                    "Pulli"
+                  ],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "بلوفر / كنزة",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-wei--2650k",
+                  "word": "weiß",
+                  "partOfSpeech": "Adjektiv",
+                  "definition": "white",
+                  "example": "Die Bluse ist weiß.",
+                  "synonyms": [],
+                  "antonyms": [
+                    "schwarz"
+                  ],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "أبيض",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-die-schwester-maoauk",
+                  "word": "die Schwester",
+                  "partOfSpeech": "Nomen",
+                  "definition": "sister",
+                  "example": "Meine Schwester ist dreizehn.",
+                  "synonyms": [],
+                  "antonyms": [
+                    "der Bruder"
+                  ],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "الأخت",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-das-pferd-jtjfkn",
+                  "word": "das Pferd",
+                  "partOfSpeech": "Nomen",
+                  "definition": "horse",
+                  "example": "Das Pferd ist braun.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "الحصان",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-das-baby-s4m6n4",
+                  "word": "das Baby",
+                  "partOfSpeech": "Nomen",
+                  "definition": "baby",
+                  "example": "Das ist ein Baby.",
+                  "synonyms": [
+                    "Kleinkind"
+                  ],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "الطفل الرضيع",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-bestimmter-und-unbestimm-3ke6ee",
+                  "word": "Bestimmter und unbestimmter Artikel",
+                  "partOfSpeech": "Grammatik",
+                  "definition": "definite and indefinite articles: der/das/die and ein/eine",
+                  "example": "der Mann - ein Mann; die Frau - eine Frau",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "الأدوات المحددة وغير المحددة",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-possessivartikel-mein-de-syxltd",
+                  "word": "Possessivartikel mein/dein",
+                  "partOfSpeech": "Grammatik",
+                  "definition": "possessive articles meaning my/your",
+                  "example": "mein Mann, dein Baby, meine Frau, deine Eltern",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "أدوات الملكية: ملكي / ملكك",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-zeitangaben--am-im-d5rgz7",
+                  "word": "Zeitangaben: am/im",
+                  "partOfSpeech": "Grammatik",
+                  "definition": "time expressions with am for days and im for months/seasons",
+                  "example": "am Montag, im Januar, im Winter",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "تعبيرات الوقت: am مع الأيام و im مع الشهور والفصول",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-vorlieben--gern-lieber-64tzfe",
+                  "word": "Vorlieben: gern/lieber",
+                  "partOfSpeech": "Grammatik",
+                  "definition": "expressing likes and preferences",
+                  "example": "Ich esse gern Bratwurst. Ich esse lieber Käse.",
+                  "synonyms": [],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "التعبير عن المفضلات: أحب / أفضل",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                },
+                {
+                  "id": "ai-zahlen-bqdf3g",
+                  "word": "Zahlen",
+                  "partOfSpeech": "Nomen Plural",
+                  "definition": "numbers",
+                  "example": "eins, zwei, drei, dreizehn, zwanzig, hundert",
+                  "synonyms": [
+                    "Nummern"
+                  ],
+                  "antonyms": [],
+                  "difficulty": "ai-generated",
+                  "frequency": 1,
+                  "importance": 1,
+                  "arabic": "الأرقام",
+                  "breakdown": [],
+                  "review": {
+                    "intervalDays": 1,
+                    "ease": 2.4,
+                    "dueAt": 1782752048498
+                  }
+                }
+              ],
+              "questions": [
+                {
+                  "id": "ai-q-0",
+                  "termId": "ai-der-basketball-wx00jw",
+                  "word": "der Basketball",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Ich spiele gern .......... . Der Ball geht in den Korb.",
+                  "choices": [
+                    "Basketball",
+                    "Kino",
+                    "Musik",
+                    "Theater"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "السياق يتكلم عن كرة وسلة، إذن الإجابة Basketball.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 1,
+                  "question": "Ich spiele gern .......... . Der Ball geht in den Korb.",
+                  "options": [
+                    "Basketball",
+                    "Kino",
+                    "Musik",
+                    "Theater"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-1",
+                  "termId": "ai-der-basketball-wx00jw",
+                  "word": "der Basketball",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Form ist richtig? .......... ist ein Hobby.",
+                  "choices": [
+                    "Der Basketball",
+                    "Die Basketball",
+                    "Das Basketball",
+                    "Ein Basketball"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Basketball في الألمانية مذكر: der Basketball.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 2,
+                  "question": "Welche Form ist richtig? .......... ist ein Hobby.",
+                  "options": [
+                    "Der Basketball",
+                    "Die Basketball",
+                    "Das Basketball",
+                    "Ein Basketball"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-2",
+                  "termId": "ai-chatten-c8285h",
+                  "word": "chatten",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Ich schreibe online mit Freunden. Ich .......... .",
+                  "choices": [
+                    "chatte",
+                    "kostet",
+                    "esse",
+                    "trinke"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "الدردشة أونلاين تعني: ich chatte.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 3,
+                  "question": "Ich schreibe online mit Freunden. Ich .......... .",
+                  "options": [
+                    "chatte",
+                    "kostet",
+                    "esse",
+                    "trinke"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-3",
+                  "termId": "ai-chatten-c8285h",
+                  "word": "chatten",
+                  "type": "usage",
+                  "typeLabel": "Usage",
+                  "prompt": "Welche Antwort passt? Was machst du im Internet?",
+                  "choices": [
+                    "Ich chatte.",
+                    "Ich bin Tee.",
+                    "Ich kostet Fußball.",
+                    "Ich ist Musik."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "الفعل chatten يُصرف مع ich: ich chatte.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 4,
+                  "question": "Welche Antwort passt? Was machst du im Internet?",
+                  "options": [
+                    "Ich chatte.",
+                    "Ich bin Tee.",
+                    "Ich kostet Fußball.",
+                    "Ich ist Musik."
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-4",
+                  "termId": "ai-die-disco-qao55y",
+                  "word": "die Disco",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Am Abend gehe ich in .......... . Dort ist Musik.",
+                  "choices": [
+                    "die Disco",
+                    "der Tee",
+                    "das Pferd",
+                    "die Schwester"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "المكان الذي توجد فيه موسيقى مساءً هو الديسكو.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 5,
+                  "question": "Am Abend gehe ich in .......... . Dort ist Musik.",
+                  "options": [
+                    "die Disco",
+                    "der Tee",
+                    "das Pferd",
+                    "die Schwester"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-5",
+                  "termId": "ai-die-disco-qao55y",
+                  "word": "die Disco",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Wähle den richtigen Artikel: .......... Disco.",
+                  "choices": [
+                    "die",
+                    "der",
+                    "das",
+                    "ein"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Disco مؤنثة، لذلك نستخدم die.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 6,
+                  "question": "Wähle den richtigen Artikel: .......... Disco.",
+                  "options": [
+                    "die",
+                    "der",
+                    "das",
+                    "ein"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-6",
+                  "termId": "ai-der-fu-ball-weegv4",
+                  "word": "der Fußball",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Nein, ich mag nicht Tennis. Ich mag .......... .",
+                  "choices": [
+                    "Fußball",
+                    "Bluse",
+                    "Tee",
+                    "Januar"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "الجملة الأصلية في الدرس: Nein, ich mag Fußball.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 7,
+                  "question": "Nein, ich mag nicht Tennis. Ich mag .......... .",
+                  "options": [
+                    "Fußball",
+                    "Bluse",
+                    "Tee",
+                    "Januar"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-7",
+                  "termId": "ai-der-fu-ball-weegv4",
+                  "word": "der Fußball",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Form ist richtig?",
+                  "choices": [
+                    "der Fußball",
+                    "die Fußball",
+                    "das Fußball",
+                    "eine Fußball"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Fußball مذكر وتأخذ der.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 8,
+                  "question": "Welche Form ist richtig?",
+                  "options": [
+                    "der Fußball",
+                    "die Fußball",
+                    "das Fußball",
+                    "eine Fußball"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-8",
+                  "termId": "ai-das-kino-s4s3qh",
+                  "word": "das Kino",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Ich sehe einen Film im .......... .",
+                  "choices": [
+                    "Kino",
+                    "Käse",
+                    "Montag",
+                    "Winter"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "نشاهد الفيلم في السينما: im Kino.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 9,
+                  "question": "Ich sehe einen Film im .......... .",
+                  "options": [
+                    "Kino",
+                    "Käse",
+                    "Montag",
+                    "Winter"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-9",
+                  "termId": "ai-das-kino-s4s3qh",
+                  "word": "das Kino",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Wähle den richtigen Artikel: .......... Kino.",
+                  "choices": [
+                    "das",
+                    "der",
+                    "die",
+                    "eine"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Kino محايدة وتأخذ das.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 10,
+                  "question": "Wähle den richtigen Artikel: .......... Kino.",
+                  "options": [
+                    "das",
+                    "der",
+                    "die",
+                    "eine"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-10",
+                  "termId": "ai-die-musik-q5ibub",
+                  "word": "die Musik",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche deutsche Bedeutung passt zu: موسيقى?",
+                  "choices": [
+                    "die Musik",
+                    "die Bluse",
+                    "das Baby",
+                    "der Tee"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "موسيقى بالألمانية هي die Musik.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 11,
+                  "question": "Welche deutsche Bedeutung passt zu: موسيقى?",
+                  "options": [
+                    "die Musik",
+                    "die Bluse",
+                    "das Baby",
+                    "der Tee"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-11",
+                  "termId": "ai-die-musik-q5ibub",
+                  "word": "die Musik",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Wähle den richtigen Artikel: .......... Musik.",
+                  "choices": [
+                    "die",
+                    "der",
+                    "das",
+                    "ein"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Musik مؤنثة وتأخذ die.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 12,
+                  "question": "Wähle den richtigen Artikel: .......... Musik.",
+                  "options": [
+                    "die",
+                    "der",
+                    "das",
+                    "ein"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-12",
+                  "termId": "ai-im-internet-surfen-ub7mrm",
+                  "word": "im Internet surfen",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Ich suche online Informationen. Ich .......... .",
+                  "choices": [
+                    "surfe im Internet",
+                    "esse Käse",
+                    "bin Montag",
+                    "kostet Tee"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "تصفح الإنترنت يعني: im Internet surfen.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 13,
+                  "question": "Ich suche online Informationen. Ich .......... .",
+                  "options": [
+                    "surfe im Internet",
+                    "esse Käse",
+                    "bin Montag",
+                    "kostet Tee"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-13",
+                  "termId": "ai-im-internet-surfen-ub7mrm",
+                  "word": "im Internet surfen",
+                  "type": "usage",
+                  "typeLabel": "Usage",
+                  "prompt": "Welche Antwort passt zu einem Hobby?",
+                  "choices": [
+                    "Ich surfe im Internet.",
+                    "Ich bin ein Januar.",
+                    "Ich kostet 1 Euro.",
+                    "Ich ist weiß."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "الجملة صحيحة للتعبير عن هواية.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 14,
+                  "question": "Welche Antwort passt zu einem Hobby?",
+                  "options": [
+                    "Ich surfe im Internet.",
+                    "Ich bin ein Januar.",
+                    "Ich kostet 1 Euro.",
+                    "Ich ist weiß."
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-14",
+                  "termId": "ai-das-tennis-myhpwb",
+                  "word": "das Tennis",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Magst du ..........? Ja, ich mag das Spiel mit Schläger und Ball.",
+                  "choices": [
+                    "Tennis",
+                    "Tee",
+                    "Baby",
+                    "Bluse"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "اللعبة بالمضرب والكرة هي Tennis.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 15,
+                  "question": "Magst du ..........? Ja, ich mag das Spiel mit Schläger und Ball.",
+                  "options": [
+                    "Tennis",
+                    "Tee",
+                    "Baby",
+                    "Bluse"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-15",
+                  "termId": "ai-das-tennis-myhpwb",
+                  "word": "das Tennis",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Form ist richtig?",
+                  "choices": [
+                    "das Tennis",
+                    "der Tennis",
+                    "die Tennis",
+                    "eine Tennis"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Tennis محايدة وتأخذ das.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 16,
+                  "question": "Welche Form ist richtig?",
+                  "options": [
+                    "das Tennis",
+                    "der Tennis",
+                    "die Tennis",
+                    "eine Tennis"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-16",
+                  "termId": "ai-das-theater-46455",
+                  "word": "das Theater",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche deutsche Bedeutung passt zu: المسرح?",
+                  "choices": [
+                    "das Theater",
+                    "die Pizza",
+                    "der Käse",
+                    "das Wochenende"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "المسرح بالألمانية هو das Theater.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 17,
+                  "question": "Welche deutsche Bedeutung passt zu: المسرح?",
+                  "options": [
+                    "das Theater",
+                    "die Pizza",
+                    "der Käse",
+                    "das Wochenende"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-17",
+                  "termId": "ai-das-theater-46455",
+                  "word": "das Theater",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Wähle den richtigen Artikel: .......... Theater.",
+                  "choices": [
+                    "das",
+                    "die",
+                    "der",
+                    "eine"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Theater محايدة وتأخذ das.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 18,
+                  "question": "Wähle den richtigen Artikel: .......... Theater.",
+                  "options": [
+                    "das",
+                    "die",
+                    "der",
+                    "eine"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-18",
+                  "termId": "ai-hallo--guten-tag--68xi5g",
+                  "word": "Hallo!/Guten Tag!",
+                  "type": "usage",
+                  "typeLabel": "Usage",
+                  "prompt": "Du triffst deinen Lehrer. Was sagst du?",
+                  "choices": [
+                    "Guten Tag!",
+                    "Auf Wiedersehen!",
+                    "Noch einmal bitte.",
+                    "1 Euro 50."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Guten Tag تستخدم للتحية.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 19,
+                  "question": "Du triffst deinen Lehrer. Was sagst du?",
+                  "options": [
+                    "Guten Tag!",
+                    "Auf Wiedersehen!",
+                    "Noch einmal bitte.",
+                    "1 Euro 50."
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-19",
+                  "termId": "ai-hallo--guten-tag--68xi5g",
+                  "word": "Hallo!/Guten Tag!",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche Wörter sind Grüße?",
+                  "choices": [
+                    "Hallo! Guten Tag!",
+                    "Tschüss! Auf Wiedersehen!",
+                    "Wie bitte?",
+                    "Nein, lieber Käse."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Hallo و Guten Tag من عبارات التحية.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 20,
+                  "question": "Welche Wörter sind Grüße?",
+                  "options": [
+                    "Hallo! Guten Tag!",
+                    "Tschüss! Auf Wiedersehen!",
+                    "Wie bitte?",
+                    "Nein, lieber Käse."
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-20",
+                  "termId": "ai-tsch-ss--auf-wiedersehen-3s5ek4",
+                  "word": "Tschüss!/Auf Wiedersehen!",
+                  "type": "usage",
+                  "typeLabel": "Usage",
+                  "prompt": "Du gehst nach Hause. Was sagst du?",
+                  "choices": [
+                    "Tschüss!",
+                    "Hallo!",
+                    "Wie geht's?",
+                    "Was kostet?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Tschüss تستخدم عند الوداع.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 21,
+                  "question": "Du gehst nach Hause. Was sagst du?",
+                  "options": [
+                    "Tschüss!",
+                    "Hallo!",
+                    "Wie geht's?",
+                    "Was kostet?"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-21",
+                  "termId": "ai-tsch-ss--auf-wiedersehen-3s5ek4",
+                  "word": "Tschüss!/Auf Wiedersehen!",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche Wörter bedeuten: إلى اللقاء / وداعًا?",
+                  "choices": [
+                    "Auf Wiedersehen! Tschüss!",
+                    "Guten Tag! Hallo!",
+                    "Gut. Es geht.",
+                    "Am Montag. Im Winter."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "هاتان العبارتان للوداع.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 22,
+                  "question": "Welche Wörter bedeuten: إلى اللقاء / وداعًا?",
+                  "options": [
+                    "Auf Wiedersehen! Tschüss!",
+                    "Guten Tag! Hallo!",
+                    "Gut. Es geht.",
+                    "Am Montag. Im Winter."
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-22",
+                  "termId": "ai-wie-geht-s--9ap278",
+                  "word": "Wie geht's?",
+                  "type": "usage",
+                  "typeLabel": "Usage",
+                  "prompt": "Welche Frage passt zur Antwort: Gut.",
+                  "choices": [
+                    "Wie geht's?",
+                    "Was kostet der Tee?",
+                    "Magst du Käse?",
+                    "Wie alt ist die Bluse?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Gut إجابة عن السؤال عن الحال.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 23,
+                  "question": "Welche Frage passt zur Antwort: Gut.",
+                  "options": [
+                    "Wie geht's?",
+                    "Was kostet der Tee?",
+                    "Magst du Käse?",
+                    "Wie alt ist die Bluse?"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-23",
+                  "termId": "ai-wie-geht-s--9ap278",
+                  "word": "Wie geht's?",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "A: .......... B: Es geht.",
+                  "choices": [
+                    "Wie geht's?",
+                    "Was ist das?",
+                    "Wann?",
+                    "K-I-N-O"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Es geht تعني الحال متوسط، وتأتي جوابًا على Wie geht's?",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 24,
+                  "question": "A: .......... B: Es geht.",
+                  "options": [
+                    "Wie geht's?",
+                    "Was ist das?",
+                    "Wann?",
+                    "K-I-N-O"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-24",
+                  "termId": "ai-magst-du------iyaa24",
+                  "word": "Magst du ...?",
+                  "type": "usage",
+                  "typeLabel": "Usage",
+                  "prompt": "Welche Frage fragt nach Zuneigung?",
+                  "choices": [
+                    "Magst du Tennis?",
+                    "Was kostet der Tee?",
+                    "Wie alt ist deine Schwester?",
+                    "Wann?"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Magst du ...? تستخدم للسؤال عن الإعجاب.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 25,
+                  "question": "Welche Frage fragt nach Zuneigung?",
+                  "options": [
+                    "Magst du Tennis?",
+                    "Was kostet der Tee?",
+                    "Wie alt ist deine Schwester?",
+                    "Wann?"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-25",
+                  "termId": "ai-magst-du------iyaa24",
+                  "word": "Magst du ...?",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Wähle die richtige Antwort auf: Magst du Tennis?",
+                  "choices": [
+                    "Ja, ich mag Tennis.",
+                    "Ja, ich bin Tennis.",
+                    "Ja, ich kostet Tennis.",
+                    "Ja, ich am Tennis."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "الفعل الصحيح مع الإعجاب هو mag.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 26,
+                  "question": "Wähle die richtige Antwort auf: Magst du Tennis?",
+                  "options": [
+                    "Ja, ich mag Tennis.",
+                    "Ja, ich bin Tennis.",
+                    "Ja, ich kostet Tennis.",
+                    "Ja, ich am Tennis."
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-26",
+                  "termId": "ai-wie-bitte--noch-einmal-b-2uxwnd",
+                  "word": "Wie bitte?/Noch einmal bitte.",
+                  "type": "usage",
+                  "typeLabel": "Usage",
+                  "prompt": "Du hast nicht verstanden. Was sagst du?",
+                  "choices": [
+                    "Wie bitte?",
+                    "Ich esse gern.",
+                    "Der Januar.",
+                    "Das Baby ist weiß."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Wie bitte? تقال عند عدم الفهم وطلب الإعادة.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 27,
+                  "question": "Du hast nicht verstanden. Was sagst du?",
+                  "options": [
+                    "Wie bitte?",
+                    "Ich esse gern.",
+                    "Der Januar.",
+                    "Das Baby ist weiß."
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-27",
+                  "termId": "ai-wie-bitte--noch-einmal-b-2uxwnd",
+                  "word": "Wie bitte?/Noch einmal bitte.",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche Wendung bedeutet: مرة أخرى من فضلك?",
+                  "choices": [
+                    "Noch einmal bitte.",
+                    "Guten Tag.",
+                    "Ich mag Fußball.",
+                    "Am Montag."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Noch einmal bitte تعني مرة أخرى من فضلك.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 28,
+                  "question": "Welche Wendung bedeutet: مرة أخرى من فضلك?",
+                  "options": [
+                    "Noch einmal bitte.",
+                    "Guten Tag.",
+                    "Ich mag Fußball.",
+                    "Am Montag."
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-28",
+                  "termId": "ai-schulf-cher-7zclmn",
+                  "word": "Schulfächer",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Deutsch, Englisch und Mathematik sind .......... .",
+                  "choices": [
+                    "Schulfächer",
+                    "Monate",
+                    "Farben",
+                    "Hobbys"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Deutsch وEnglisch وMathematik مواد دراسية.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 29,
+                  "question": "Deutsch, Englisch und Mathematik sind .......... .",
+                  "options": [
+                    "Schulfächer",
+                    "Monate",
+                    "Farben",
+                    "Hobbys"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-29",
+                  "termId": "ai-schulf-cher-7zclmn",
+                  "word": "Schulfächer",
+                  "type": "inference",
+                  "typeLabel": "Inference",
+                  "prompt": "Welche Reihe enthält nur Fächer?",
+                  "choices": [
+                    "Biologie, Chemie, Deutsch",
+                    "Januar, Februar, März",
+                    "rot, blau, weiß",
+                    "Tee, Käse, Pizza"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "هذه أسماء مواد دراسية.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 30,
+                  "question": "Welche Reihe enthält nur Fächer?",
+                  "options": [
+                    "Biologie, Chemie, Deutsch",
+                    "Januar, Februar, März",
+                    "rot, blau, weiß",
+                    "Tee, Käse, Pizza"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-30",
+                  "termId": "ai-der-montag-wg5gqr",
+                  "word": "der Montag",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche deutsche Bedeutung passt zu: يوم الاثنين?",
+                  "choices": [
+                    "der Montag",
+                    "der Januar",
+                    "der Winter",
+                    "das Wochenende"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "يوم الاثنين بالألمانية der Montag.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 31,
+                  "question": "Welche deutsche Bedeutung passt zu: يوم الاثنين?",
+                  "options": [
+                    "der Montag",
+                    "der Januar",
+                    "der Winter",
+                    "das Wochenende"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-31",
+                  "termId": "ai-der-montag-wg5gqr",
+                  "word": "der Montag",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Zeitangabe ist richtig?",
+                  "choices": [
+                    "am Montag",
+                    "im Montag",
+                    "der Montag",
+                    "ein Montag"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "مع أيام الأسبوع نستخدم am.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 32,
+                  "question": "Welche Zeitangabe ist richtig?",
+                  "options": [
+                    "am Montag",
+                    "im Montag",
+                    "der Montag",
+                    "ein Montag"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-32",
+                  "termId": "ai-das-wochenende-8yslnq",
+                  "word": "das Wochenende",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche deutsche Bedeutung passt zu: نهاية الأسبوع?",
+                  "choices": [
+                    "das Wochenende",
+                    "der Mittwoch",
+                    "die Woche",
+                    "der Winter"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "نهاية الأسبوع بالألمانية das Wochenende.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 33,
+                  "question": "Welche deutsche Bedeutung passt zu: نهاية الأسبوع?",
+                  "options": [
+                    "das Wochenende",
+                    "der Mittwoch",
+                    "die Woche",
+                    "der Winter"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-33",
+                  "termId": "ai-das-wochenende-8yslnq",
+                  "word": "das Wochenende",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Wähle den richtigen Artikel: .......... Wochenende.",
+                  "choices": [
+                    "das",
+                    "der",
+                    "die",
+                    "eine"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Wochenende محايدة وتأخذ das.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 34,
+                  "question": "Wähle den richtigen Artikel: .......... Wochenende.",
+                  "options": [
+                    "das",
+                    "der",
+                    "die",
+                    "eine"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-34",
+                  "termId": "ai-der-winter-rt0098",
+                  "word": "der Winter",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Es ist kalt. Es ist .......... .",
+                  "choices": [
+                    "Winter",
+                    "Sommer",
+                    "Pizza",
+                    "Tennis"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "البرودة ترتبط بفصل الشتاء.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 35,
+                  "question": "Es ist kalt. Es ist .......... .",
+                  "options": [
+                    "Winter",
+                    "Sommer",
+                    "Pizza",
+                    "Tennis"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-35",
+                  "termId": "ai-der-winter-rt0098",
+                  "word": "der Winter",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Zeitangabe ist richtig?",
+                  "choices": [
+                    "im Winter",
+                    "am Winter",
+                    "der Winter",
+                    "eine Winter"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "مع الفصول نستخدم im.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 36,
+                  "question": "Welche Zeitangabe ist richtig?",
+                  "options": [
+                    "im Winter",
+                    "am Winter",
+                    "der Winter",
+                    "eine Winter"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-36",
+                  "termId": "ai-der-januar-y2zfhe",
+                  "word": "der Januar",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche deutsche Bedeutung passt zu: يناير?",
+                  "choices": [
+                    "der Januar",
+                    "der Montag",
+                    "der Herbst",
+                    "das Theater"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "يناير بالألمانية der Januar.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 37,
+                  "question": "Welche deutsche Bedeutung passt zu: يناير?",
+                  "options": [
+                    "der Januar",
+                    "der Montag",
+                    "der Herbst",
+                    "das Theater"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-37",
+                  "termId": "ai-der-januar-y2zfhe",
+                  "word": "der Januar",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Zeitangabe ist richtig?",
+                  "choices": [
+                    "im Januar",
+                    "am Januar",
+                    "die Januar",
+                    "eine Januar"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "مع الشهور نستخدم im.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 38,
+                  "question": "Welche Zeitangabe ist richtig?",
+                  "options": [
+                    "im Januar",
+                    "am Januar",
+                    "die Januar",
+                    "eine Januar"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-38",
+                  "termId": "ai-die-bratwurst-wzd9iq",
+                  "word": "die Bratwurst",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Ich esse gern .......... . Das ist eine Wurst.",
+                  "choices": [
+                    "Bratwurst",
+                    "Tee",
+                    "Kino",
+                    "Montag"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Bratwurst نوع من النقانق.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 39,
+                  "question": "Ich esse gern .......... . Das ist eine Wurst.",
+                  "options": [
+                    "Bratwurst",
+                    "Tee",
+                    "Kino",
+                    "Montag"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-39",
+                  "termId": "ai-die-bratwurst-wzd9iq",
+                  "word": "die Bratwurst",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Wähle den richtigen Artikel: .......... Bratwurst.",
+                  "choices": [
+                    "die",
+                    "der",
+                    "das",
+                    "ein"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Bratwurst مؤنثة وتأخذ die.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 40,
+                  "question": "Wähle den richtigen Artikel: .......... Bratwurst.",
+                  "options": [
+                    "die",
+                    "der",
+                    "das",
+                    "ein"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-40",
+                  "termId": "ai-der-k-se-fca3kq",
+                  "word": "der Käse",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche deutsche Bedeutung passt zu: الجبنة?",
+                  "choices": [
+                    "der Käse",
+                    "der Tee",
+                    "die Pizza",
+                    "das Eis"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "الجبنة بالألمانية der Käse.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 41,
+                  "question": "Welche deutsche Bedeutung passt zu: الجبنة?",
+                  "options": [
+                    "der Käse",
+                    "der Tee",
+                    "die Pizza",
+                    "das Eis"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-41",
+                  "termId": "ai-der-k-se-fca3kq",
+                  "word": "der Käse",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Antwort passt? Nein, ich esse lieber .......... .",
+                  "choices": [
+                    "Käse",
+                    "trinke",
+                    "Montag",
+                    "weiß"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "بعد esse يأتي طعام، وKäse طعام.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 42,
+                  "question": "Welche Antwort passt? Nein, ich esse lieber .......... .",
+                  "options": [
+                    "Käse",
+                    "trinke",
+                    "Montag",
+                    "weiß"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-42",
+                  "termId": "ai-der-tee-pp6idh",
+                  "word": "der Tee",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Was kostet ..........? 1 Euro 50.",
+                  "choices": [
+                    "der Tee",
+                    "die Schwester",
+                    "das Theater",
+                    "der Montag"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "الجملة من الدرس: Was kostet der Tee?",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 43,
+                  "question": "Was kostet ..........? 1 Euro 50.",
+                  "options": [
+                    "der Tee",
+                    "die Schwester",
+                    "das Theater",
+                    "der Montag"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-43",
+                  "termId": "ai-der-tee-pp6idh",
+                  "word": "der Tee",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Wähle den richtigen Artikel: .......... Tee.",
+                  "choices": [
+                    "der",
+                    "die",
+                    "das",
+                    "eine"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Tee مذكر وتأخذ der.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 44,
+                  "question": "Wähle den richtigen Artikel: .......... Tee.",
+                  "options": [
+                    "der",
+                    "die",
+                    "das",
+                    "eine"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-44",
+                  "termId": "ai-die-pizza-q42gbc",
+                  "word": "die Pizza",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche deutsche Bedeutung passt zu: بيتزا?",
+                  "choices": [
+                    "die Pizza",
+                    "der Tee",
+                    "das Pferd",
+                    "der Winter"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "بيتزا بالألمانية die Pizza.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 45,
+                  "question": "Welche deutsche Bedeutung passt zu: بيتزا?",
+                  "options": [
+                    "die Pizza",
+                    "der Tee",
+                    "das Pferd",
+                    "der Winter"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-45",
+                  "termId": "ai-die-pizza-q42gbc",
+                  "word": "die Pizza",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Wähle den richtigen Artikel: .......... Pizza.",
+                  "choices": [
+                    "die",
+                    "der",
+                    "das",
+                    "ein"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Pizza مؤنثة وتأخذ die.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 46,
+                  "question": "Wähle den richtigen Artikel: .......... Pizza.",
+                  "options": [
+                    "die",
+                    "der",
+                    "das",
+                    "ein"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-46",
+                  "termId": "ai-die-bluse-qbprj7",
+                  "word": "die Bluse",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Das ist .......... . Sie ist weiß.",
+                  "choices": [
+                    "eine Bluse",
+                    "ein Mann",
+                    "ein Baby",
+                    "ein Tee"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Bluse مؤنثة، لذلك النكرة eine Bluse.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 47,
+                  "question": "Das ist .......... . Sie ist weiß.",
+                  "options": [
+                    "eine Bluse",
+                    "ein Mann",
+                    "ein Baby",
+                    "ein Tee"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-47",
+                  "termId": "ai-die-bluse-qbprj7",
+                  "word": "die Bluse",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Beschreibung ist richtig?",
+                  "choices": [
+                    "Die Bluse ist weiß.",
+                    "Der Bluse ist weiß.",
+                    "Das Bluse ist weiß.",
+                    "Eine Bluse sind weiß."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Bluse مؤنثة: die Bluse، والفعل مع المفرد ist.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 48,
+                  "question": "Welche Beschreibung ist richtig?",
+                  "options": [
+                    "Die Bluse ist weiß.",
+                    "Der Bluse ist weiß.",
+                    "Das Bluse ist weiß.",
+                    "Eine Bluse sind weiß."
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-48",
+                  "termId": "ai-der-pullover-utcvk8",
+                  "word": "der Pullover",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche deutsche Bedeutung passt zu: بلوفر / كنزة?",
+                  "choices": [
+                    "der Pullover",
+                    "die Hose",
+                    "das Baby",
+                    "der Käse"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "بلوفر بالألمانية der Pullover.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 49,
+                  "question": "Welche deutsche Bedeutung passt zu: بلوفر / كنزة?",
+                  "options": [
+                    "der Pullover",
+                    "die Hose",
+                    "das Baby",
+                    "der Käse"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-49",
+                  "termId": "ai-der-pullover-utcvk8",
+                  "word": "der Pullover",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Wähle den richtigen Artikel: .......... Pullover.",
+                  "choices": [
+                    "der",
+                    "die",
+                    "das",
+                    "eine"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Pullover مذكر وتأخذ der.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 50,
+                  "question": "Wähle den richtigen Artikel: .......... Pullover.",
+                  "options": [
+                    "der",
+                    "die",
+                    "das",
+                    "eine"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-50",
+                  "termId": "ai-wei--2650k",
+                  "word": "weiß",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Die Bluse ist nicht schwarz. Sie ist .......... .",
+                  "choices": [
+                    "weiß",
+                    "Montag",
+                    "Käse",
+                    "Baby"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "weiß لون ويعني أبيض.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 51,
+                  "question": "Die Bluse ist nicht schwarz. Sie ist .......... .",
+                  "options": [
+                    "weiß",
+                    "Montag",
+                    "Käse",
+                    "Baby"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-51",
+                  "termId": "ai-wei--2650k",
+                  "word": "weiß",
+                  "type": "antonym",
+                  "typeLabel": "Antonym",
+                  "prompt": "Die Jacke ist <u>weiß</u>. Das Gegenteil ist .......... .",
+                  "choices": [
+                    "schwarz",
+                    "grün",
+                    "rosa",
+                    "gelb"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "عكس الأبيض هو الأسود: schwarz.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 52,
+                  "question": "Die Jacke ist <u>weiß</u>. Das Gegenteil ist .......... .",
+                  "options": [
+                    "schwarz",
+                    "grün",
+                    "rosa",
+                    "gelb"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-52",
+                  "termId": "ai-die-schwester-maoauk",
+                  "word": "die Schwester",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Wie alt ist deine ..........? Meine .......... ist dreizehn.",
+                  "choices": [
+                    "Schwester",
+                    "Tee",
+                    "Kino",
+                    "Winter"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "السؤال في الدرس عن الأخت: deine Schwester.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 53,
+                  "question": "Wie alt ist deine ..........? Meine .......... ist dreizehn.",
+                  "options": [
+                    "Schwester",
+                    "Tee",
+                    "Kino",
+                    "Winter"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-53",
+                  "termId": "ai-die-schwester-maoauk",
+                  "word": "die Schwester",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Form ist richtig?",
+                  "choices": [
+                    "meine Schwester",
+                    "mein Schwester",
+                    "dein Schwester",
+                    "der Schwester"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Schwester مؤنثة، لذلك نستخدم meine.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 54,
+                  "question": "Welche Form ist richtig?",
+                  "options": [
+                    "meine Schwester",
+                    "mein Schwester",
+                    "dein Schwester",
+                    "der Schwester"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-54",
+                  "termId": "ai-das-pferd-jtjfkn",
+                  "word": "das Pferd",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche deutsche Bedeutung passt zu: الحصان?",
+                  "choices": [
+                    "das Pferd",
+                    "das Baby",
+                    "die Pizza",
+                    "der Pullover"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "الحصان بالألمانية das Pferd.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 55,
+                  "question": "Welche deutsche Bedeutung passt zu: الحصان?",
+                  "options": [
+                    "das Pferd",
+                    "das Baby",
+                    "die Pizza",
+                    "der Pullover"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-55",
+                  "termId": "ai-das-pferd-jtjfkn",
+                  "word": "das Pferd",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Wähle den richtigen Artikel: .......... Pferd.",
+                  "choices": [
+                    "das",
+                    "der",
+                    "die",
+                    "eine"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "كلمة Pferd محايدة وتأخذ das.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 56,
+                  "question": "Wähle den richtigen Artikel: .......... Pferd.",
+                  "options": [
+                    "das",
+                    "der",
+                    "die",
+                    "eine"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-56",
+                  "termId": "ai-das-baby-s4m6n4",
+                  "word": "das Baby",
+                  "type": "context",
+                  "typeLabel": "Context",
+                  "prompt": "Was ist das? Das ist .......... .",
+                  "choices": [
+                    "ein Baby",
+                    "eine Mann",
+                    "eine Tee",
+                    "der Bluse"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Baby محايد، وأداة النكرة معه ein.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 57,
+                  "question": "Was ist das? Das ist .......... .",
+                  "options": [
+                    "ein Baby",
+                    "eine Mann",
+                    "eine Tee",
+                    "der Bluse"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-57",
+                  "termId": "ai-das-baby-s4m6n4",
+                  "word": "das Baby",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Form ist richtig?",
+                  "choices": [
+                    "mein Baby",
+                    "meine Baby",
+                    "deine Baby",
+                    "die Baby"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Baby محايد، لذلك نستخدم mein/dein وليس meine/deine.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 58,
+                  "question": "Welche Form ist richtig?",
+                  "options": [
+                    "mein Baby",
+                    "meine Baby",
+                    "deine Baby",
+                    "die Baby"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-58",
+                  "termId": "ai-bestimmter-und-unbestimm-3ke6ee",
+                  "word": "Bestimmter und unbestimmter Artikel",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Reihe ist richtig?",
+                  "choices": [
+                    "der Mann - ein Mann",
+                    "der Mann - eine Mann",
+                    "die Frau - ein Frau",
+                    "das Baby - eine Baby"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "مع der وdas نستخدم ein، ومع die المفرد نستخدم eine.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 59,
+                  "question": "Welche Reihe ist richtig?",
+                  "options": [
+                    "der Mann - ein Mann",
+                    "der Mann - eine Mann",
+                    "die Frau - ein Frau",
+                    "das Baby - eine Baby"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-59",
+                  "termId": "ai-bestimmter-und-unbestimm-3ke6ee",
+                  "word": "Bestimmter und unbestimmter Artikel",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Ergänze richtig: Das ist .......... Bluse.",
+                  "choices": [
+                    "eine",
+                    "ein",
+                    "der",
+                    "das"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Bluse مؤنثة، وأداة النكرة للمؤنث هي eine.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 60,
+                  "question": "Ergänze richtig: Das ist .......... Bluse.",
+                  "options": [
+                    "eine",
+                    "ein",
+                    "der",
+                    "das"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-60",
+                  "termId": "ai-possessivartikel-mein-de-syxltd",
+                  "word": "Possessivartikel mein/dein",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Form passt zu einem femininen Nomen?",
+                  "choices": [
+                    "meine Frau",
+                    "mein Frau",
+                    "dein Frau",
+                    "das Frau"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Frau مؤنثة، لذلك نستخدم meine أو deine.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 61,
+                  "question": "Welche Form passt zu einem femininen Nomen?",
+                  "options": [
+                    "meine Frau",
+                    "mein Frau",
+                    "dein Frau",
+                    "das Frau"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-61",
+                  "termId": "ai-possessivartikel-mein-de-syxltd",
+                  "word": "Possessivartikel mein/dein",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Form passt zu einem Nomen im Plural?",
+                  "choices": [
+                    "deine Eltern",
+                    "dein Eltern",
+                    "mein Eltern",
+                    "der Eltern"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "Eltern جمع، لذلك نستخدم meine/deine.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 62,
+                  "question": "Welche Form passt zu einem Nomen im Plural?",
+                  "options": [
+                    "deine Eltern",
+                    "dein Eltern",
+                    "mein Eltern",
+                    "der Eltern"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-62",
+                  "termId": "ai-zeitangaben--am-im-d5rgz7",
+                  "word": "Zeitangaben: am/im",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Zeitangabe passt zu einem Wochentag?",
+                  "choices": [
+                    "am Freitag",
+                    "im Freitag",
+                    "am Januar",
+                    "der Freitag"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "مع أيام الأسبوع نستخدم am.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 63,
+                  "question": "Welche Zeitangabe passt zu einem Wochentag?",
+                  "options": [
+                    "am Freitag",
+                    "im Freitag",
+                    "am Januar",
+                    "der Freitag"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-63",
+                  "termId": "ai-zeitangaben--am-im-d5rgz7",
+                  "word": "Zeitangaben: am/im",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Zeitangabe passt zu einem Monat?",
+                  "choices": [
+                    "im März",
+                    "am März",
+                    "der März",
+                    "eine März"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "مع الشهور نستخدم im.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 64,
+                  "question": "Welche Zeitangabe passt zu einem Monat?",
+                  "options": [
+                    "im März",
+                    "am März",
+                    "der März",
+                    "eine März"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-64",
+                  "termId": "ai-vorlieben--gern-lieber-64tzfe",
+                  "word": "Vorlieben: gern/lieber",
+                  "type": "usage",
+                  "typeLabel": "Usage",
+                  "prompt": "Welche Aussage bedeutet: أحب أكل النقانق?",
+                  "choices": [
+                    "Ich esse gern Bratwurst.",
+                    "Ich trinke gern Bratwurst.",
+                    "Ich esse lieber Tee.",
+                    "Ich bin Bratwurst."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "gern تعبر عن الشيء الذي تحبه.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 65,
+                  "question": "Welche Aussage bedeutet: أحب أكل النقانق?",
+                  "options": [
+                    "Ich esse gern Bratwurst.",
+                    "Ich trinke gern Bratwurst.",
+                    "Ich esse lieber Tee.",
+                    "Ich bin Bratwurst."
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-65",
+                  "termId": "ai-vorlieben--gern-lieber-64tzfe",
+                  "word": "Vorlieben: gern/lieber",
+                  "type": "grammar",
+                  "typeLabel": "Grammar",
+                  "prompt": "Welche Aussage bedeutet: أفضل أكل الجبنة?",
+                  "choices": [
+                    "Ich esse lieber Käse.",
+                    "Ich esse gern Tee.",
+                    "Ich trinke lieber Bluse.",
+                    "Ich mag am Käse."
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "lieber تعني أفضل، وKäse طعام يأتي مع esse.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 66,
+                  "question": "Welche Aussage bedeutet: أفضل أكل الجبنة?",
+                  "options": [
+                    "Ich esse lieber Käse.",
+                    "Ich esse gern Tee.",
+                    "Ich trinke lieber Bluse.",
+                    "Ich mag am Käse."
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-66",
+                  "termId": "ai-zahlen-bqdf3g",
+                  "word": "Zahlen",
+                  "type": "definition",
+                  "typeLabel": "Definition",
+                  "prompt": "Welche Zahl ist 13?",
+                  "choices": [
+                    "dreizehn",
+                    "zwölf",
+                    "zwanzig",
+                    "dreißig"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "13 بالألمانية dreizehn.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 67,
+                  "question": "Welche Zahl ist 13?",
+                  "options": [
+                    "dreizehn",
+                    "zwölf",
+                    "zwanzig",
+                    "dreißig"
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "id": "ai-q-67",
+                  "termId": "ai-zahlen-bqdf3g",
+                  "word": "Zahlen",
+                  "type": "usage",
+                  "typeLabel": "Usage",
+                  "prompt": "Meine Schwester ist .......... .",
+                  "choices": [
+                    "dreizehn",
+                    "der Tee",
+                    "weiß",
+                    "am Montag"
+                  ],
+                  "answerIndex": 0,
+                  "explanation": "عند التعبير عن العمر نستخدم رقمًا مثل dreizehn.",
+                  "metadata": {
+                    "targetLanguage": "en",
+                    "vocabularyOnly": false,
+                    "distractorStrategy": "ai",
+                    "aiGenerated": true
+                  },
+                  "number": 68,
+                  "question": "Meine Schwester ist .......... .",
+                  "options": [
+                    "dreizehn",
+                    "der Tee",
+                    "weiß",
+                    "am Montag"
+                  ],
+                  "correctAnswer": 0
+                }
+              ],
+              "summary": "## شرح القواعد النحوية فقط\n\n### 1) أداة التعريف: der / das / die\nفي اللغة الألمانية كل اسم له أداة تعريف، ويجب حفظ الاسم مع أداته دائمًا.\n\n- **der** مع كثير من الأسماء المذكرة: **der Kaffee**, **der Tee**, **der Pullover**, **der Vater**.\n- **das** مع كثير من الأسماء المحايدة: **das Kino**, **das Tennis**, **das Baby**, **das Pferd**.\n- **die** مع كثير من الأسماء المؤنثة: **die Pizza**, **die Bluse**, **die Mutter**, **die Schwester**.\n- **die** تُستخدم أيضًا مع الجمع: **die Eltern**, **die Schuhe**, **die Passfotos**.\n\nمثال:\n- **Der Tee kostet 1 Euro 50.** = الشاي تكلفته 1 يورو و50 سنتًا.\n- **Die Bluse ist weiß.** = البلوزة بيضاء.\n- **Das Baby ist klein.** = الطفل صغير.\n\n### 2) أداة النكرة: ein / eine\nأداة النكرة تعني: واحد / واحدة / شيء غير محدد.\n\n- مع **der** نستعمل **ein**: **der Mann → ein Mann**.\n- مع **das** نستعمل **ein**: **das Baby → ein Baby**.\n- مع **die** المفرد نستعمل **eine**: **die Frau → eine Frau**, **die Bluse → eine Bluse**.\n\nأمثلة:\n- **Das ist ein Mann.** = هذا رجل.\n- **Das ist ein Baby.** = هذا طفل.\n- **Das ist eine Bluse.** = هذه بلوزة.\n\n### 3) أدوات الملكية: mein / dein / meine / deine\nأداة الملكية تتغير حسب نوع الاسم وعدده.\n\n- مع الاسم المذكر أو المحايد المفرد نستخدم: **mein / dein**.\n  - **mein Mann** = رجلي / زوجي.\n  - **dein Baby** = طفلك.\n- مع الاسم المؤنث المفرد أو الجمع نستخدم: **meine / deine**.\n  - **meine Frau** = سيدتي / زوجتي.\n  - **deine Eltern** = والداك.\n\nأمثلة:\n- **Mein Bruder ist dreizehn.** = أخي عمره 13.\n- **Deine Schwester ist nett.** = أختك لطيفة.\n- **Meine Eltern sind hier.** = والداي هنا.\n\n### 4) التعبير عن الوقت: am / im\nنستخدم حروف جر مختلفة حسب نوع الزمن.\n\n- مع أيام الأسبوع نستخدم **am**:\n  - **am Montag** = يوم الاثنين.\n  - **am Freitag** = يوم الجمعة.\n- مع الشهور والفصول نستخدم **im**:\n  - **im Januar** = في يناير.\n  - **im Winter** = في الشتاء.\n\nأمثلة:\n- **Wann? Am Montag.** = متى؟ يوم الاثنين.\n- **Wann? Im Januar.** = متى؟ في يناير.\n- **Wann? Im Winter.** = متى؟ في الشتاء.\n\n### 5) السؤال بالفعل: Magst du ...?\nعند السؤال عن الإعجاب بشيء نستخدم:\n\n**Magst du + الاسم؟**\n\nأمثلة:\n- **Magst du Tennis?** = هل تحب التنس؟\n- **Ja, ich mag Tennis.** = نعم، أحب التنس.\n- **Nein, ich mag Fußball.** = لا، أحب كرة القدم.\n\n### 6) التعبير عن التفضيل: gern / lieber\n- **gern** تعني: أحب / بسرور.\n- **lieber** تعني: أفضل.\n\nأمثلة:\n- **Ich esse gern Bratwurst.** = أحب أكل النقانق.\n- **Ich trinke gern Tee.** = أحب شرب الشاي.\n- **Nein, ich esse lieber Käse.** = لا، أفضل أكل الجبنة.\n\n### 7) وصف الأشخاص والأشياء\nلوصف شيء أو شخص نستخدم غالبًا الفعل **sein** بمعنى يكون.\n\nأمثلة:\n- **Die Bluse ist weiß.** = البلوزة بيضاء.\n- **Meine Schwester ist dreizehn.** = أختي عمرها 13.\n- **Das ist ein Herz.** = هذا قلب.\n\n### 8) السؤال عن العمر\nالصيغة المهمة:\n\n**Wie alt ist ...?** = كم عمر ...؟\n\nأمثلة:\n- **Wie alt ist deine Schwester?** = كم عمر أختك؟\n- **Meine Schwester ist dreizehn.** = أختي عمرها 13.\n\n### 9) السؤال عن السعر\nالصيغة المهمة:\n\n**Was kostet ...?** = كم تكلفة ...؟\n\nمثال:\n- **Was kostet der Tee?** = كم تكلفة الشاي؟\n- **1 Euro 50.** = 1 يورو و50 سنتًا.",
+              "sourceText": "النص العربي المرفق قبل الصور:\nھذا مھم\nالھوایات\nالمسرح\nتنس\nتصفح الأنترنت\nموسیقي\nسینما\nكرة قدم\nحانة\nدردشة\nكرة سلة\nاستطیع ان افعل ھذا الآن\nوداعا\nإلي اللقاء\nعدم الإعجاب\nالإعجاب\nھل تحب التنس؟\nنعم أحب التنس\nلا، أحب كرة القدم\nالتھجئة\nالتكرار\nمن فضلك\nعذرا؟ مرة أخري من فضلك\nالخطة الزمنیة للدراسة\nالمواد الدراسیة\nیوم من أیام الأسبوع\nالفصول\nالشھور\nالطعام والشراب\nالأرقام\nأدوات محددة\nأنا أعرف ھذا الآن\nمنح الوقت\nمتيفي الشتاء في ینایر في یوم الاثنین\nما تكلفة الشاي؟ السعر\nالتعبیر عن المفضلات\nأنا أشرب أنت ایضا؟ أنا أحب تناول النقانق\nأنا افضل تناول الجبنة نعم /لا\nالملابس\nالألوان\nالعائلة\nحیوانات\nالحصان\nالأشخاص\nالأرقام\nالأدوات المحددة والغیر محددة\nأدوات الملكیة\nوالدي/والدیك سیدتي /سیدتك طفلي/طفلك رجلك ملكي\nالتعرف علي الأشیاء بعض الأسماء\nھذا قلب ھذا رجل انھا تكون بلوزة ما ھذا؟\nھذه البلوزه بیضاء\nما عمر أختك؟\nأختي تكون 13\n\nصفحة 22\n\n1-3 Das ist wichtig! هذا مهم\n\nLektion 1\n\nWORTSCHATZ المفردات\n\nHobbys الهوايات\nكرة سلة — der Basketball\nدردشة — chatten\nحانة / ديسكو — die Disco\nكرة قدم — der Fußball\nسينما — das Kino\nموسيقى — die Musik\nتصفح الأنترنت — im Internet surfen\nتنس — das Tennis\nالمسرح — das Theater\n\nZahlen الأرقام\n0–12:\n0 – null\n1 – eins\n2 – zwei\n3 – drei\n4 – vier\n5 – fünf\n6 – sechs\n7 – sieben\n8 – acht\n9 – neun\n10 – zehn\n11 – elf\n12 – zwölf\n\nAlphabet\nAa\nBb\nCc\nDd\nEe\nFf\nGg\nHh\nIi\nJj\nKk\nLl\nMm\nNn\nOo\nPp\nQq\nRr\nSs\nTt\nUu\nVv\nWw\nXx\nYy\nZz\nÄä (a Umlaut)\nÖö (o Umlaut)\nÜü (u Umlaut)\nß (Esszet)\n\nDas kann ich jetzt! أستطيع أن أفعل هذا الآن\n\ngrüßen/mich verabschieden\nHallo!\nGuten Tag!\nTschüss!\nAuf Wiedersehen!\nوداعا\nإلى اللقاء\n\nnach dem Befinden fragen\nWie geht's?\nGut.\nEs geht.\nNicht so gut.\nUnd dir?\n\nZuneigung/Abneigung äußern الإعجاب / عدم الإعجاب\nMagst du Tennis?\nهل تحب التنس؟\nJa, ich mag Tennis.\nنعم، أحب التنس.\nNein, ich mag Fußball.\nلا، أحب كرة القدم.\n\nbuchstabieren التهجئة\nK-I-N-O\n\num Wiederholung bitten من فضلك\nWie bitte?\nNoch einmal bitte.\nعذرًا؟\nمرة أخرى من فضلك.\n\nLernen lernen\nDu kannst viele Wörter auf Deutsch verstehen! Du kennst sie aus deiner Sprache oder aus anderen Sprachen! → B2\nLerne das Alphabet auswendig! Das hilft dir beim Buchstabieren und später bei der Wörterbucharbeit! → B9\n\nLektion 2\n\nWORTSCHATZ المفردات\n\nSchulfächer/Stundenplan الخطة الزمنية للدراسة / المواد الدراسية\nBiologie\nChemie\nDeutsch\nEnglisch\nEthik\nGeografie\nGeschichte\nInformatik\nKunst\nMathematik\nMusik\nPhysik\nReligion\nSozialkunde\nSport\n\nWochentage يوم من أيام الأسبوع\nder Montag\nder Dienstag\nder Mittwoch\nder Donnerstag\nder Freitag\nder Samstag\nder Sonntag\ndas Wochenende\n\nJahreszeiten الفصول\nder Winter\nder Frühling\nder Sommer\nder Herbst\n\nMonate الشهور\nder Januar\nder Februar\nder März\nder April\nder Mai\nder Juni\nder Juli\nder August\nder September\nder Oktober\nder November\nder Dezember\n\nEssen und Trinken الطعام والشراب\ndie Banane\ndie Bratwurst\ndas Eis\nder/das Joghurt\nder Käse\ndie Pizza\ndie Salami\ndie Schokolade\ndie Tomate\nder Kaffee\nder Milchkaffee\ndas Mineralwasser\nder Tee\n\nZahlen الأرقام\n13–19:\n13 – dreizehn\n14 – vierzehn\n15 – fünfzehn\n16 – sechzehn\n17 – siebzehn\n18 – achtzehn\n19 – neunzehn\n\n20–99:\n20 – zwanzig\n30 – dreißig\n40 – vierzig\n50 – fünfzig\n60 – sechzig\n70 – siebzig\n80 – achtzig\n90 – neunzig\n21 – einundzwanzig\n22 – zweiundzwanzig\n\nBestimmter Artikel أدوات محددة\nder Kaffee\ndas Eis\ndie Pizza\ndie Passfotos\n\nFußzeile: 22  LEKTION 1–3\n\nصفحة 23\n\nDas ist wichtig! 1-3\n\nDas kann ich jetzt! أنا أعرف هذا الآن\n\nZeitangaben machen منح الوقت\nWann?\nمتى؟\nAm Montag.\nفي يوم الاثنين.\nIm Januar.\nفي يناير.\nIm Winter.\nفي الشتاء.\n\nPreise nennen السعر\nWas kostet der Tee?\nما تكلفة الشاي؟\n1 Euro 50.\n\nVorlieben äußern التعبير عن المفضلات\nIch esse gern Bratwurst.\nأنا أحب تناول النقانق.\nDu auch?\nأنت أيضًا؟\nIch trinke ...\nأنا أشرب ...\nJa.\nنعم.\nNein, ich esse lieber Käse.\nلا، أنا أفضل تناول الجبنة.\n\nLernen lernen\nDu verstehst internationale Wörter. Aber die Aussprache ist in jeder Sprache anders! → A2\nNotiere und markiere die Nomen farbig. So kannst du dir den Artikel besser merken! → B10\nder, das, die? Lerne Nomen immer mit Artikel! → B11\n\nLektion 3\n\nWORTSCHATZ المفردات\n\nKleidung الملابس\ndie Bluse\ndie Hose\ndie Jacke\nder Pullover\nder Ring\ndie Schuhe\ndas Top\ndas T-Shirt\n\nFarben الألوان\nblau\nbraun\ngelb\ngrau\ngrün\nlila\nrosa\nrot\nschwarz\nweiß\n\nFamilie العائلة\ndie Mutter\nder Vater\ndie Schwester\nder Bruder\ndie Eltern\ndie Geschwister\ndie Großeltern\ndie Großmutter\nder Großvater\ndie Tante\nder Onkel\ndie Cousine\nder Cousin\n\nTiere الحيوانات\ndas Pferd\nالحصان\n\nPersonen الأشخاص\ndas Baby\n\nZahlen الأرقام\n100–999:\n100 – (ein)hundert\n134 – einhundertvierunddreißig\n356 – dreihundertsechsundfünfzig\n1000 – (ein)tausend\n\nBestimmter und unbestimmter Artikel الأدوات المحددة وغير المحددة\nder – ein Mann\ndas – ein Baby\ndie – eine Frau\ndie – Männer\n\nPossessivartikel أدوات الملكية\nmein/dein Mann\nرجلي/رجلك\nmein/dein Baby\nطفلي/طفلك\nmeine/deine Frau\nسيدتي/سيدتك\nmeine/deine Eltern\nوالدي/والديك\n\nDas kann ich jetzt! أنا أعرف هذا الآن\n\netwas benennen / identifizieren التعرف على الأشياء\nWas ist das (denn)?\nما هذا؟\nDas ist eine Bluse.\nإنها تكون بلوزة.\nDas ist ein Mann.\nهذا رجل.\nDas ist ein Herz.\nهذا قلب.\n\netwas / jemanden beschreiben وصف شيء / شخص\nDie Bluse ist weiß.\nهذه البلوزة بيضاء.\nWie alt ist deine Schwester?\nما عمر أختك؟\nMeine Schwester ist dreizehn.\nأختي تكون 13.\n\nLernen lernen\nVergleich mit anderen Sprachen! Das hilft beim Verstehen und Lernen! → A6\n\nFußzeile: LEKTION 1–3  23"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "learned": [],
+  "mistakes": [],
+  "quizHistory": [],
+  "activeIndex": 0,
+  "settings": {
+    "theme": "light",
+    "timerMode": false,
+    "dailyGoal": 12,
+    "srsStartingEase": 2.4,
+    "srsGoodBonus": 0.08,
+    "srsEasyBonus": 0.15,
+    "srsEasyMultiplier": 2,
+    "srsAgainPenalty": 0.22,
+    "srsAgainIntervalHours": 20,
+    "srsLeechThreshold": 5,
+    "engineMode": "ai",
+    "apiBaseUrl": "https://ai.hackclub.com/proxy/v1",
+    "apiModel": "openai/gpt-5.5",
+    "totalXP": 0,
+    "hideStats": false,
+    "hideExplorer": false,
+    "hideHistory": true
+  },
+  "currentNavigation": {
+    "languageId": "lang_1782752048514",
+    "unitId": "unit_1782752048530",
+    "lessonId": null
+  },
+  "streakCount": 0,
+  "lastStudyDate": null,
+  "badges": []
+}

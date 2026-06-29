@@ -1,0 +1,1198 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Flashcards & Quiz Generator</title>
+    <script>
+      window.onerror = function(msg, url, line, col, error) {
+        fetch("/api/log-error", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            msg: String(msg),
+            url: String(url),
+            line: Number(line),
+            col: Number(col),
+            stack: error ? String(error.stack) : ""
+          })
+        }).catch(function() {});
+        return false;
+      };
+      window.addEventListener("unhandledrejection", function(event) {
+        fetch("/api/log-error", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            msg: "Unhandled Rejection: " + String(event.reason),
+            stack: event.reason && event.reason.stack ? String(event.reason.stack) : ""
+          })
+        }).catch(function() {});
+      });
+    </script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#f5f3ff',
+                100: '#ede9fe',
+                200: '#ddd6fe',
+                300: '#c4b5fd',
+                400: '#a78bfa',
+                500: '#8b5cf6',
+                600: '#7c3aed',
+                700: '#6d28d9',
+                800: '#5b21b6',
+                900: '#4c1d95',
+                950: '#2e1065',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      h1, h2, h3, .brand-font {
+        font-family: 'Outfit', sans-serif;
+      }
+      /* Card Flip 3D Animations */
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+      .transform-style-3d {
+        transform-style: preserve-3d;
+      }
+      .backface-hidden {
+        backface-visibility: hidden;
+      }
+      .rotate-y-180 {
+        transform: rotateY(180deg);
+      }
+      .flipped .flashcard-inner {
+        transform: rotateY(180deg);
+      }
+      .flashcard-inner {
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      /* Hide scrollbar but keep functionality */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none !important;
+        scrollbar-width: none !important;
+      }
+      /* Modern visible custom scrollbar styling */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(156, 163, 175, 0.4);
+        border-radius: 9999px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(156, 163, 175, 0.65);
+      }
+      .custom-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(156, 163, 175, 0.4) transparent;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 transition-colors duration-250 flex flex-col">
+    <!-- Main Header -->
+    <header class="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-zinc-900/80 border-b border-zinc-200 dark:border-zinc-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-brand-600 dark:bg-brand-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-brand-500/25 brand-font" aria-hidden="true">S</div>
+          <div>
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight">Smart Flashcards & Quiz</h1>
+            <p id="set-name" class="text-xs text-zinc-500 dark:text-zinc-400 truncate max-w-[200px] sm:max-w-xs">No study set loaded</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- XP / Level Display -->
+          <div class="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full text-indigo-600 dark:text-indigo-400 text-xs font-semibold" id="xp-header-display" title="XP and Level">
+            <span class="text-base leading-none" aria-hidden="true">⭐</span>
+            <span id="xp-display" class="font-bold">0 XP</span>
+            <span id="level-display" class="opacity-75 font-normal ml-0.5">Lvl 1</span>
+          </div>
+          <!-- Study Streak -->
+          <div class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/10 dark:bg-amber-500/5 rounded-full text-amber-600 dark:text-amber-400 text-xs font-semibold" id="streak-container" title="Daily study streak">
+            <span class="text-base leading-none" aria-hidden="true">🔥</span>
+            <span id="streak-count-display" class="font-bold">0</span>
+            <span class="hidden sm:inline">days</span>
+          </div>
+          <!-- Action Buttons -->
+          <button class="px-3.5 py-1.5 text-xs font-medium border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors" id="export-button" type="button">JSON Export</button>
+          <button class="px-3.5 py-1.5 text-xs font-medium bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 rounded-lg transition-colors" id="export-anki-btn" type="button">Anki CSV</button>
+          <button class="p-2 border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors" id="theme-toggle" type="button" aria-label="Toggle Theme">
+            <span id="theme-label" class="text-xs font-semibold">Dark</span>
+          </button>
+          <button class="px-3 py-1.5 border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors text-xs font-semibold flex items-center gap-1" id="achievements-btn" type="button" aria-label="Open Achievements">
+            <span>🏆 Achievements</span>
+          </button>
+          <button class="px-3 py-1.5 border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors text-xs font-semibold flex items-center gap-1" id="settings-btn" type="button" aria-label="Open Settings">
+            <span>⚙️ Settings</span>
+          </button>
+          <button class="px-3 py-1.5 border border-rose-200 dark:border-rose-950/40 hover:bg-rose-50 dark:hover:bg-rose-950/20 text-rose-600 dark:text-rose-400 rounded-lg transition-colors text-xs font-semibold flex items-center gap-1" id="sign-out-btn" type="button" aria-label="Sign Out">
+            <span>🚪</span> Sign Out
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tab Pill Bar -->
+    <nav class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 flex gap-1.5 border-b border-zinc-100 dark:border-zinc-900" aria-label="Sections">
+      <button class="tab px-4 py-2 text-sm font-semibold rounded-lg bg-brand-600/10 text-brand-600 dark:text-brand-400 transition-all active" type="button" data-view="home">Home</button>
+      <button class="tab px-4 py-2 text-sm font-semibold rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all" type="button" data-view="import">Import</button>
+      <button class="tab px-4 py-2 text-sm font-semibold rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all" type="button" data-view="flashcards">Flashcards</button>
+      <button class="tab px-4 py-2 text-sm font-semibold rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all" type="button" data-view="summary">Summary</button>
+      <button class="tab px-4 py-2 text-sm font-semibold rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all" type="button" data-view="quiz">Quiz</button>
+      <button class="tab px-4 py-2 text-sm font-semibold rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all" type="button" data-view="insights">Insights</button>
+    </nav>
+
+    <!-- Main Views Content -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 flex flex-col">
+      
+      <!-- VIEW 0: HOME -->
+      <section class="view flex flex-col active" id="view-home">
+        <!-- Welcoming Card Banner -->
+        <div class="relative bg-gradient-to-r from-brand-600 to-indigo-650 rounded-3xl p-6 sm:p-8 text-white shadow-xl overflow-hidden mb-6 flex flex-col sm:flex-row items-center justify-between gap-6 group">
+          <div class="relative z-10 space-y-2.5 text-center sm:text-left">
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Welcome back, <span id="home-username" class="underline decoration-wavy decoration-brand-300">Learner</span>! 👋</h2>
+            <p class="text-sm text-brand-100 max-w-md">Ready for today's study session? You have <span id="home-due-count" class="font-extrabold text-white text-base">0</span> words to review.</p>
+          </div>
+          <div class="relative z-10 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 text-center sm:text-right min-w-[150px]">
+            <span class="block text-[10px] uppercase tracking-wider text-brand-200 font-bold mb-1">Today's Progress</span>
+            <span id="home-daily-progress" class="text-2xl font-black">0%</span>
+            <span class="block text-[9px] text-brand-200 mt-1">towards daily goal</span>
+          </div>
+          <!-- Decorative background glowing shapes -->
+          <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/5 rounded-full blur-xl group-hover:scale-110 transition-transform duration-500"></div>
+          <div class="absolute -left-10 -top-10 w-36 h-36 bg-white/5 rounded-full blur-lg group-hover:scale-115 transition-transform duration-500"></div>
+        </div>
+
+        <!-- Progression & Gamification Widgets Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <!-- Level & XP Widget -->
+          <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-sm space-y-3 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Level & XP</span>
+              <span class="text-lg">⭐</span>
+            </div>
+            <div>
+              <strong id="home-level-val" class="block text-2xl font-black tracking-tight text-zinc-800 dark:text-zinc-100">Lvl 1</strong>
+              <span id="home-xp-val" class="text-xs text-zinc-450 dark:text-zinc-400 font-medium">0 / 500 XP</span>
+            </div>
+            <!-- Progress Bar -->
+            <div class="w-full bg-zinc-100 dark:bg-zinc-805 h-2 rounded-full overflow-hidden">
+              <span id="home-xp-progress-bar" class="block h-full bg-brand-600 dark:bg-brand-500 w-0 transition-all duration-300"></span>
+            </div>
+          </div>
+
+          <!-- Daily Streak Widget -->
+          <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-sm space-y-3 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Daily Streak</span>
+              <span class="text-lg">🔥</span>
+            </div>
+            <div>
+              <strong id="home-streak-val" class="block text-2xl font-black tracking-tight text-zinc-800 dark:text-zinc-100">0 Days</strong>
+              <span class="text-xs text-zinc-450 dark:text-zinc-400 font-medium">Study daily to maintain it</span>
+            </div>
+            <span class="text-[10px] text-amber-500 font-bold block">Keep the fire burning!</span>
+          </div>
+
+          <!-- Vocabulary Count Summary -->
+          <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-sm space-y-3 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Vocabulary</span>
+              <span class="text-lg">📚</span>
+            </div>
+            <div>
+              <strong id="home-vocab-total" class="block text-2xl font-black tracking-tight text-zinc-800 dark:text-zinc-100">0</strong>
+              <span id="home-vocab-mastered" class="text-xs text-zinc-455 dark:text-zinc-400 font-medium">0 mastered</span>
+            </div>
+            <span class="text-[10px] text-zinc-400 dark:text-zinc-550 block font-semibold">Total terms in active sets</span>
+          </div>
+
+          <!-- Badges & Achievements Summary -->
+          <button type="button" id="home-badges-card-btn" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-sm space-y-3 flex flex-col justify-between text-left group hover:border-brand-500 transition-all">
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Badges</span>
+              <span class="text-lg">🏆</span>
+            </div>
+            <div>
+              <strong id="home-badges-val" class="block text-2xl font-black tracking-tight text-zinc-800 dark:text-zinc-100 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">0 / 3</strong>
+              <span class="text-xs text-zinc-450 dark:text-zinc-400 font-medium">badges unlocked</span>
+            </div>
+            <span class="text-[10px] text-brand-600 dark:text-brand-400 font-bold flex items-center gap-1 group-hover:underline">View Badges →</span>
+          </button>
+        </div>
+
+        <!-- Quick Learning Actions Grid -->
+        <h3 class="text-xs font-extrabold uppercase tracking-wider text-zinc-400 mb-3.5">Quick Actions</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <button type="button" onclick="document.querySelector('[data-view=import]').click()" class="p-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl flex flex-col items-center text-center gap-3 group hover:border-brand-500 hover:shadow-md transition-all">
+            <span class="text-3xl group-hover:scale-110 transition-transform">📁</span>
+            <div class="space-y-0.5">
+              <span class="block text-xs font-bold text-zinc-800 dark:text-zinc-200">Import Files</span>
+              <span class="block text-[9px] text-zinc-405">PDF/DOCX/Images</span>
+            </div>
+          </button>
+
+          <button type="button" onclick="document.querySelector('[data-view=flashcards]').click()" class="p-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl flex flex-col items-center text-center gap-3 group hover:border-brand-500 hover:shadow-md transition-all">
+            <span class="text-3xl group-hover:scale-110 transition-transform">🎴</span>
+            <div class="space-y-0.5">
+              <span class="block text-xs font-bold text-zinc-800 dark:text-zinc-200">Study Flashcards</span>
+              <span class="block text-[9px] text-zinc-405">Spaced Repetition</span>
+            </div>
+          </button>
+
+          <button type="button" onclick="document.querySelector('[data-view=quiz]').click()" class="p-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl flex flex-col items-center text-center gap-3 group hover:border-brand-500 hover:shadow-md transition-all">
+            <span class="text-3xl group-hover:scale-110 transition-transform">📝</span>
+            <div class="space-y-0.5">
+              <span class="block text-xs font-bold text-zinc-800 dark:text-zinc-200">Practice Quiz</span>
+              <span class="block text-[9px] text-zinc-405">Comprehension tests</span>
+            </div>
+          </button>
+
+          <button type="button" onclick="document.querySelector('[data-view=insights]').click()" class="p-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl flex flex-col items-center text-center gap-3 group hover:border-brand-500 hover:shadow-md transition-all">
+            <span class="text-3xl group-hover:scale-110 transition-transform">📊</span>
+            <div class="space-y-0.5">
+              <span class="block text-xs font-bold text-zinc-800 dark:text-zinc-200">View Insights</span>
+              <span class="block text-[9px] text-zinc-405">analytics & folders</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Recent Folders / Lessons list -->
+        <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col gap-4">
+          <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3">
+            <h3 class="text-sm font-bold text-zinc-800 dark:text-zinc-200">Recent Lessons</h3>
+            <p class="text-xs text-zinc-400 mt-0.5">Quick access to your study folders</p>
+          </div>
+          <div id="home-recent-lessons-list" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 1: IMPORT -->
+      <section class="view flex flex-col hidden" id="view-import">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" id="import-grid">
+          <!-- Create Study Set Panel -->
+          <div class="lg:col-span-2 main-panel-import bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col gap-4">
+            <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-4">
+              <div>
+                <h2 class="text-lg font-bold">Create Study Set</h2>
+                <p class="text-xs text-zinc-400 mt-0.5">Import notes, documents, or create vocabulary cards manually</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="toggle-explorer-import-btn" class="px-2.5 py-1.5 text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg transition-colors flex items-center gap-1" type="button" title="Toggle Explorer Sidebar">
+                  <span class="toggle-icon-explorer">👁️</span> Explorer
+                </button>
+                <span id="processing-mode" class="status-pill px-2 py-0.5 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-400">Local Engine</span>
+              </div>
+            </div>
+
+            <!-- API Key -->
+            <div class="space-y-2">
+              <div class="flex items-end justify-between">
+                <div>
+                  <label class="text-xs font-semibold text-zinc-500 dark:text-zinc-400" for="api-key-input">HackClub API Key (Optional)</label>
+                  <p class="text-[11px] text-zinc-400">Enables advanced AI generation and multi-language OCR models</p>
+                </div>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-[11px] font-semibold bg-brand-600 hover:bg-brand-700 text-white rounded transition-colors" id="save-key-btn" type="button">Save</button>
+                  <button class="px-2 py-1 text-[11px] font-semibold bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded transition-colors" id="delete-key-btn" type="button" disabled>Delete</button>
+                </div>
+              </div>
+              <input type="password" id="api-key-input" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-brand-500" placeholder="Paste your HackClub API key here..." autocomplete="off" />
+            </div>
+
+            <!-- Drag and Drop File Area -->
+            <label id="file-drop" class="border-2 border-dashed border-zinc-200 dark:border-zinc-800 hover:border-brand-500 dark:hover:border-brand-500 bg-zinc-50 dark:bg-zinc-950 rounded-2xl p-4 text-center flex flex-col items-center justify-center cursor-pointer group transition-all">
+              <input id="file-input" class="hidden" type="file" accept=".txt,.pdf,.docx,.png,.jpg,.jpeg,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/png,image/jpeg" />
+              <span class="w-12 h-12 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-850 rounded-xl flex items-center justify-center text-xl shadow-sm mb-3 group-hover:scale-105 transition-transform">📁</span>
+              <span id="file-name" class="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Choose a file</span>
+              <span class="text-xs text-zinc-400 mt-1 max-w-xs">Supports PDF, DOCX, TXT notes, or image screenshots</span>
+            </label>
+
+            <!-- Manual Table Inputs -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-sm font-bold">Vocabulary Table</h3>
+                  <p class="text-xs text-zinc-400">Fill rows manually to generate custom flashcards</p>
+                </div>
+                <button class="px-3 py-1.5 text-xs font-semibold bg-brand-50 dark:bg-brand-950/30 hover:bg-brand-100 dark:hover:bg-brand-900/40 text-brand-600 dark:text-brand-400 rounded-lg transition-colors" id="add-manual-row" type="button">Add row</button>
+              </div>
+              <div class="max-h-[600px] overflow-y-auto pr-1">
+                <table class="w-full border-collapse">
+                  <tbody id="manual-rows"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- AI Instructions (visible only in AI Engine mode) -->
+            <div id="ai-instructions-container" class="space-y-1.5 hidden">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 bg-gradient-to-br from-violet-500 to-indigo-500 rounded-lg flex items-center justify-center text-white text-xs shadow-sm">🤖</span>
+                <label class="text-xs font-bold text-violet-600 dark:text-violet-400" for="ai-instructions">AI Instructions (Optional)</label>
+              </div>
+              <textarea id="ai-instructions" rows="2" class="w-full text-sm bg-violet-50/50 dark:bg-violet-950/20 border border-violet-200 dark:border-violet-800/50 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-violet-500 placeholder:text-violet-300 dark:placeholder:text-violet-700 transition-all" placeholder="e.g. Extract all vocabulary words with their meanings and generate mixed questions covering grammar rules too..." dir="auto"></textarea>
+              <p class="text-[10px] text-violet-400 dark:text-violet-600">Tell the AI exactly what to extract and how to process this file — your instructions will guide the extraction and question generation.</p>
+            </div>
+
+            <!-- Text Input Fallback -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-semibold text-zinc-500 dark:text-zinc-400" for="text-input">Plain Text Fallback / Extracted Text</label>
+                <button id="use-saved-text-btn" class="px-2 py-1 text-[11px] font-semibold bg-brand-50 hover:bg-brand-100 dark:bg-brand-950/30 dark:hover:bg-brand-900/40 text-brand-600 dark:text-brand-400 rounded transition-colors hidden" type="button">🔄 Use Text from Current Lesson</button>
+              </div>
+              <textarea id="text-input" rows="2" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2 outline-none focus:ring-2 focus:ring-brand-500" placeholder="Or paste note content, reading passages, or lists directly here..."></textarea>
+            </div>
+
+
+
+            <!-- Style Blueprints (Optional styling) -->
+            <div class="border-t border-zinc-100 dark:border-zinc-850 pt-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-sm font-bold">Exam Blueprint PDFs (Optional)</h3>
+                  <p class="text-xs text-zinc-400">Upload sample exams to replicate their layout via AI</p>
+                </div>
+                <button class="px-2.5 py-1.5 text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg transition-colors" id="clear-blueprint" type="button" disabled>Clear All</button>
+              </div>
+              <label id="blueprint-drop" class="border border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 rounded-xl p-4 text-center flex flex-col items-center justify-center cursor-pointer group transition-all">
+                <input id="style-blueprint-input" class="hidden" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg" multiple />
+                <span class="text-lg mb-1 group-hover:scale-105 transition-transform" aria-hidden="true">📄</span>
+                <span id="blueprint-name" class="text-xs font-semibold text-zinc-700 dark:text-zinc-300">Upload blueprints</span>
+              </label>
+              <div id="blueprint-list" class="max-h-[150px] overflow-y-auto no-scrollbar space-y-1"></div>
+            </div>
+
+            <!-- Process buttons -->
+            <div class="flex gap-2 border-t border-zinc-100 dark:border-zinc-850 pt-4">
+              <button class="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all shadow-md shadow-brand-500/25" id="process-button" type="button">Generate Study Set</button>
+              <button class="py-3 px-6 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-xl font-semibold transition-all" id="sample-button" type="button">Load Sample</button>
+            </div>
+          </div>
+
+          <!-- Content Explorer & Vocabulary Sidebar -->
+          <div class="explorer-sidebar-placeholder">
+            <div id="explorer-sidebar" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col gap-4 lg:sticky lg:top-[88px] lg:h-[calc(100vh-112px)] overflow-hidden">
+              <!-- Breadcrumbs path (Shared) -->
+              <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3">
+                <div id="breadcrumbs-container" class="text-xs text-zinc-400 font-semibold flex items-center gap-1.5 flex-wrap">
+                  <!-- E.g. Home > English > Unit 1 -->
+                </div>
+                <div class="flex items-center gap-2">
+                  <button id="back-explorer-btn" class="text-xs font-semibold text-brand-600 hover:text-brand-700 hidden" type="button">← Back</button>
+                  <button id="close-explorer-btn" class="text-zinc-400 hover:text-rose-500 dark:hover:text-rose-400 text-xs font-bold transition-colors p-1" type="button" title="Collapse Explorer">✕</button>
+                </div>
+              </div>
+
+              <!-- Global Search Bar -->
+              <div class="relative flex items-center">
+                <input type="text" id="global-search-input" class="w-full text-xs bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl pl-8 pr-8 py-2 outline-none focus:ring-2 focus:ring-brand-500" placeholder="Search vocabulary globally..." />
+                <span class="absolute left-2.5 text-zinc-400 text-xs" aria-hidden="true">🔍</span>
+                <button id="clear-search-btn" class="absolute right-2.5 text-zinc-400 hover:text-zinc-655 text-xs hidden" type="button" aria-label="Clear Search">✕</button>
+              </div>
+
+              <!-- CONTAINER A: EXPLORER VIEW -->
+              <div id="explorer-view" class="flex-1 flex flex-col gap-4 min-h-0">
+                <div class="flex items-center justify-between">
+                  <h3 id="explorer-title" class="text-sm font-bold text-zinc-800 dark:text-zinc-200">Languages</h3>
+                  <span id="selected-mixed-count" class="status-pill px-2 py-0.5 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-400 hidden">0 selected</span>
+                </div>
+                
+                <!-- Explorer list scroll -->
+                <div id="explorer-list" class="flex-1 overflow-y-auto space-y-2">
+                  <!-- Languages / Units / Lessons list -->
+                </div>
+
+                <!-- Explorer actions -->
+                <div class="flex flex-col gap-2 border-t border-zinc-100 dark:border-zinc-850 pt-3">
+                  <button id="add-item-btn" class="w-full py-2 bg-zinc-100 dark:bg-zinc-850 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-lg text-xs font-bold transition-colors" type="button">+ Add Item</button>
+                  <button id="start-mixed-quiz-btn" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm shadow-indigo-500/25 hidden" type="button">Start Mixed Quiz (0 words)</button>
+                  <button id="start-mixed-flashcards-btn" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm shadow-brand-500/25 hidden" type="button">Study Mixed Flashcards (0 words)</button>
+                </div>
+              </div>
+
+              <!-- CONTAINER B: VOCABULARY LIST VIEW (Lesson Content) -->
+              <div id="vocab-view" class="flex-1 flex flex-col gap-4 min-h-0 hidden">
+                <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-2">
+                  <div>
+                    <h2 class="text-sm font-bold">Vocabulary List</h2>
+                    <p id="vocab-summary" class="text-[11px] text-zinc-400 mt-0.5">Words inside lesson</p>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span id="term-count" class="status-pill px-2 py-0.5 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-400">0 words</span>
+                    <button id="delete-all-words" class="text-zinc-400 hover:text-rose-500 text-xs font-bold transition-colors" type="button" disabled>Delete All</button>
+                  </div>
+                </div>
+                
+                <div id="word-list" class="flex-1 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
+                  <!-- Word list cards -->
+                </div>
+
+                <!-- Vocab actions -->
+                <div class="flex flex-col gap-2 border-t border-zinc-100 dark:border-zinc-850 pt-3">
+                  <button id="study-lesson-flashcards-btn" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm shadow-brand-500/25" type="button">Study Flashcards</button>
+                  <button id="start-lesson-quiz-btn" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm shadow-indigo-500/25" type="button">Start Quiz</button>
+                  <button id="ask-ai-btn" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm shadow-emerald-500/25 flex items-center justify-center gap-1.5" type="button">
+                    <span>🤖</span> Ask AI Assistant
+                  </button>
+                </div>
+              </div>
+
+              <!-- CONTAINER C: GLOBAL SEARCH RESULTS -->
+              <div id="search-results-view" class="flex-1 flex flex-col gap-4 min-h-0 hidden">
+                <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-2">
+                  <div>
+                    <h2 class="text-sm font-bold text-zinc-850 dark:text-zinc-200">Search Results</h2>
+                    <p class="text-[11px] text-zinc-400 mt-0.5">Matching terms across all folders</p>
+                  </div>
+                  <span id="search-results-count" class="status-pill px-2 py-0.5 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-400">0 found</span>
+                </div>
+                <div id="search-results-list" class="flex-1 overflow-y-auto space-y-2">
+                  <!-- Search result items -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: SUMMARY -->
+      <section class="view hidden flex flex-col" id="view-summary">
+        <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col gap-6 max-w-4xl mx-auto w-full">
+          <div class="flex items-center justify-between border-b border-zinc-150 dark:border-zinc-800 pb-4">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📝</span>
+              <div>
+                <h2 class="text-xl font-black text-zinc-800 dark:text-zinc-100">Study Material Summary</h2>
+                <p class="text-xs text-zinc-400">AI-generated concise review of the uploaded study material</p>
+              </div>
+            </div>
+            <button id="regenerate-summary-btn" class="px-4 py-2 text-xs font-bold bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-xl transition-colors hidden" type="button">Regenerate Summary</button>
+          </div>
+          <div id="summary-content" class="text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 prose dark:prose-invert max-w-none space-y-4">
+            <!-- Summary will be injected here as HTML (parsed from markdown) -->
+            <div class="flex flex-col items-center justify-center py-12 text-zinc-400">
+              <span class="text-4xl mb-3">📄</span>
+              <p class="text-sm">No study material loaded. Generate a study set or select a lesson to view its summary.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: FLASHCARDS -->
+      <section class="view hidden flex flex-col" id="view-flashcards">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6" id="flashcards-grid">
+          
+          <!-- Card Deck Workspace -->
+          <div class="lg:col-span-2 main-panel-flashcards flex flex-col gap-4 justify-between">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-lg font-bold">Study Flashcards</h2>
+                <p id="card-position" class="text-xs text-zinc-400 mt-0.5">0 of 0</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="toggle-stats-btn" class="px-2.5 py-1.5 text-xs font-semibold bg-zinc-100 dark:bg-zinc-850 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-lg transition-colors flex items-center gap-1" type="button" title="Toggle Stats Panel">
+                  <span class="toggle-icon-stats">👁️</span> Stats
+                </button>
+                <button id="toggle-explorer-flashcards-btn" class="px-2.5 py-1.5 text-xs font-semibold bg-zinc-100 dark:bg-zinc-850 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-lg transition-colors flex items-center gap-1" type="button" title="Toggle Explorer Sidebar">
+                  <span class="toggle-icon-explorer">👁️</span> Explorer
+                </button>
+                <button class="px-3 py-1.5 text-xs font-semibold bg-zinc-100 dark:bg-zinc-850 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-lg transition-colors" id="speak-card" type="button">Speak Word</button>
+              </div>
+            </div>
+
+            <!-- Horizontal Progress Tracker -->
+            <div class="w-full bg-zinc-200 dark:bg-zinc-800 h-1.5 rounded-full overflow-hidden" aria-hidden="true">
+              <span id="card-progress-bar" class="block h-full bg-brand-600 dark:bg-brand-500 w-0 transition-all duration-300"></span>
+            </div>
+
+            <!-- 3D Flippable Flashcard -->
+            <div class="perspective-1000 w-full min-h-[350px] cursor-pointer" id="flashcard">
+              <div class="flashcard-inner transform-style-3d relative w-full h-full min-h-[350px] shadow-md hover:shadow-lg rounded-2xl border border-zinc-200 dark:border-zinc-850 bg-white dark:bg-zinc-900">
+                
+                <!-- CARD FACE: FRONT -->
+                <div class="card-face card-front backface-hidden absolute inset-0 w-full h-full p-6 flex flex-col justify-between items-center text-center">
+                  <div class="w-full flex items-center justify-between">
+                    <span id="card-difficulty" class="px-2 py-0.5 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-400 uppercase tracking-wider">Ready</span>
+                    <!-- Spaced Repetition status display badge -->
+                    <span id="card-srs-status" class="px-2 py-0.5 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-400">New Card</span>
+                  </div>
+                  
+                  <div class="flex-1 flex items-center justify-center py-6">
+                    <strong id="card-word" class="text-3xl sm:text-4xl font-extrabold tracking-tight brand-font break-words max-w-full">No study set loaded</strong>
+                  </div>
+                  
+                  <span class="text-xs text-zinc-400 font-medium">Tap Card to Flip & View Definition</span>
+                </div>
+
+                <!-- CARD FACE: BACK -->
+                <div class="card-face card-back backface-hidden rotate-y-180 absolute inset-0 w-full h-full p-6 flex flex-col justify-between overflow-y-auto">
+                  <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800/80 pb-2.5">
+                    <span id="card-pos" class="px-2 py-0.5 text-xs font-semibold rounded-full bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-400 uppercase tracking-wider">part of speech</span>
+                    <div class="flex items-center gap-1.5">
+                      <span id="card-srs-status-back" class="px-2 py-0.5 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">Ready</span>
+                    </div>
+                  </div>
+
+                  <!-- Definition content block -->
+                  <div class="flex-1 py-4 space-y-4">
+                    <!-- Leech Controls Container (shown only when term.isLeech is true) -->
+                    <div id="leech-controls-container" class="hidden p-3 bg-red-50 dark:bg-red-955/20 border border-red-200 dark:border-red-900 rounded-xl space-y-2">
+                      <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-red-700 dark:text-red-400 flex items-center gap-1">
+                          <span>⚠️</span> Hard Word (Leech)
+                        </span>
+                        <button type="button" id="reset-leech-btn" class="px-2 py-1 text-[10px] bg-white dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded font-bold transition-all">Reset Counter</button>
+                      </div>
+                      <button type="button" id="simplify-ai-btn" class="w-full py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5">
+                        <span>🤖</span> Get AI Help
+                      </button>
+                    </div>
+
+                    <div id="card-article-container" class="hidden">
+                      <h4 class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Grammatical Article</h4>
+                      <strong id="card-article" class="text-base font-bold text-zinc-800 dark:text-zinc-100"></strong>
+                    </div>
+
+                    <div>
+                      <h4 class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-1">English Definition</h4>
+                      <strong id="card-definition" class="text-base font-semibold text-zinc-800 dark:text-zinc-100">Generate a study set to begin.</strong>
+                    </div>
+
+                    <div id="card-arabic-container">
+                      <h4 class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Arabic Translation</h4>
+                      <span id="card-arabic" class="text-base font-bold text-brand-600 dark:text-brand-400"></span>
+                    </div>
+
+                    <div>
+                      <h4 class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Contextual Example</h4>
+                      <p id="card-example" class="text-sm text-zinc-600 dark:text-zinc-350 italic"></p>
+                    </div>
+
+                    <div>
+                      <h4 class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Morpheme/Root Breakdown</h4>
+                      <div id="card-breakdown" class="space-y-1 bg-zinc-50 dark:bg-zinc-950 p-2.5 rounded-xl border border-zinc-100 dark:border-zinc-850"></div>
+                    </div>
+
+                    <!-- Synonym & Antonym Chips -->
+                    <div id="card-related" class="flex flex-wrap gap-1.5 pt-1"></div>
+
+                    <!-- Mnemonic display container -->
+                    <div id="card-mnemonic-container" class="hidden bg-amber-50/50 dark:bg-amber-955/20 border border-amber-200 dark:border-amber-900 rounded-xl p-3 space-y-1">
+                      <h4 class="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider">🧠 Mnemonic Association (Mental Link)</h4>
+                      <p id="card-mnemonic" class="text-xs text-zinc-700 dark:text-zinc-350 font-medium"></p>
+                    </div>
+                  </div>
+
+                  <span class="text-center text-xs text-zinc-400 font-medium border-t border-zinc-100 dark:border-zinc-850 pt-2.5">Tap Card to Flip Back</span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Card Controls -->
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+              <button class="py-2.5 px-4 bg-zinc-100 dark:bg-zinc-850 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-xl text-sm font-semibold transition-colors" id="prev-card" type="button">Previous</button>
+              <button class="py-2.5 px-4 bg-zinc-100 dark:bg-zinc-850 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-xl text-sm font-semibold transition-colors" id="shuffle-cards" type="button">Shuffle</button>
+              
+              <!-- Rating Buttons Container (shown only when card is flipped) -->
+              <div id="rating-buttons-container" class="col-span-2 sm:col-span-1 hidden">
+                <div class="grid grid-cols-3 gap-1">
+                <button class="py-2 px-1 bg-red-500 hover:bg-red-600 text-white rounded-lg text-[10px] font-bold transition-colors" id="rate-again-btn" type="button" title="Again (Incorrect)">Again</button>
+                <button class="py-2 px-1 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-[10px] font-bold transition-colors" id="rate-good-btn" type="button" title="Good (Medium)">Good</button>
+                <button class="py-2 px-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-[10px] font-bold transition-colors" id="rate-easy-btn" type="button" title="Easy (Learned)">Easy</button>
+                </div>
+              </div>
+              
+              <!-- Default Rate Button (shown when card is not flipped) -->
+              <button class="py-2.5 px-4 bg-zinc-100 dark:bg-zinc-850 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-xl text-sm font-semibold transition-colors col-span-2 sm:col-span-1" id="learned-card" type="button">Rate Card</button>
+              
+              <button class="py-2.5 px-4 bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 rounded-xl text-sm font-semibold transition-colors" id="delete-card" type="button">Delete</button>
+              <button class="py-2.5 px-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-bold transition-all shadow-sm shadow-brand-500/20 col-span-2 sm:col-span-1" id="next-card" type="button">Next</button>
+            </div>
+          </div>
+
+          <!-- Practice Stats Sidebar -->
+          <div class="sidebar-panel bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-sm space-y-5 lg:sticky lg:top-[88px] lg:col-span-1">
+            <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3">
+              <div>
+                <h2 class="text-base font-bold">Practice Stats</h2>
+                <p class="text-xs text-zinc-400 mt-0.5">Spaced Repetition tracking</p>
+              </div>
+              <button id="close-stats-btn" class="text-zinc-400 hover:text-rose-500 dark:hover:text-rose-400 text-xs font-bold transition-colors p-1" type="button" title="Collapse Stats">✕</button>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-850 pb-2">
+                <span class="text-xs text-zinc-400">Mastery Level</span>
+                <strong id="mastery-percent" class="text-base font-extrabold text-zinc-850 dark:text-zinc-100">0%</strong>
+              </div>
+              <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-850 pb-2">
+                <span class="text-xs text-zinc-400">Current Streak</span>
+                <strong id="current-streak" class="text-base font-extrabold text-zinc-850 dark:text-zinc-100">0</strong>
+              </div>
+              <div class="flex items-center justify-between pb-2">
+                <span class="text-xs text-zinc-400">Review Queue</span>
+                <strong id="review-queue" class="text-base font-extrabold text-indigo-600 dark:text-indigo-400">0</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Placeholder for Content Explorer -->
+          <div class="explorer-sidebar-placeholder lg:col-span-1"></div>
+
+        </div>
+      </section>
+
+      <!-- VIEW 3: QUIZ -->
+      <section class="view hidden flex flex-col" id="view-quiz">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6" id="quiz-grid">
+          
+          <!-- Quiz Main Console -->
+          <div class="lg:col-span-2 main-panel-quiz bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col gap-6">
+            <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-4">
+              <div>
+                <h2 class="text-lg font-bold">Practice Quiz</h2>
+                <p id="quiz-subtitle" class="text-xs text-zinc-400 mt-0.5">Test your comprehension on active vocabulary terms</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="toggle-history-btn" class="px-2.5 py-1.5 text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg transition-colors flex items-center gap-1" type="button" title="Toggle History Panel">
+                  <span class="toggle-icon-history">👁️</span> History
+                </button>
+                <button id="toggle-explorer-quiz-btn" class="px-2.5 py-1.5 text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg transition-colors flex items-center gap-1" type="button" title="Toggle Explorer Sidebar">
+                  <span class="toggle-icon-explorer">👁️</span> Explorer
+                </button>
+                <span id="quiz-count" class="status-pill px-2 py-0.5 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-400">0 questions</span>
+              </div>
+            </div>
+
+            <!-- STATE A: SETUP -->
+            <div id="quiz-setup" class="space-y-6">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input id="timer-toggle" type="checkbox" class="w-4 h-4 text-brand-600 bg-zinc-100 border-zinc-300 rounded focus:ring-brand-500" />
+                <span class="text-sm font-semibold">Enable Timer Mode</span>
+              </label>
+              <div class="flex flex-col sm:flex-row gap-2 border-t border-zinc-100 dark:border-zinc-850 pt-4">
+                <button class="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all shadow-md shadow-brand-500/20" id="start-quiz" type="button">Start Quiz</button>
+                <button class="py-3 px-6 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-xl font-semibold transition-all" id="retry-mistakes" type="button">Retry Mistakes</button>
+                <button class="py-3 px-6 bg-transparent border border-zinc-250 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-850 rounded-xl font-semibold transition-all" id="export-pdf-btn-setup" type="button">Download Printed Study Guide (PDF)</button>
+              </div>
+              
+              <!-- Questions List Section -->
+              <div id="quiz-questions-panel" class="border-t border-zinc-100 dark:border-zinc-850 pt-6 mt-6 hidden">
+                <h3 class="text-sm font-bold text-zinc-700 dark:text-zinc-350 mb-3 flex items-center justify-between">
+                  <span>Questions in this Lesson</span>
+                  <span id="quiz-setup-questions-count" class="text-xs font-normal text-zinc-400">0 questions</span>
+                </h3>
+                <div id="quiz-questions-list" class="space-y-3 max-h-[350px] overflow-y-auto pr-1 custom-scrollbar">
+                  <!-- Questions will be injected here dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- STATE B: ACTIVE QUIZ -->
+            <div id="quiz-active" class="space-y-6 hidden">
+              <div class="flex items-center justify-between">
+                <span id="question-type" class="px-2 py-0.5 text-xs font-semibold rounded-full bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-400">Question</span>
+                <span id="timer-display" class="font-mono text-sm font-bold bg-zinc-100 dark:bg-zinc-800 px-3 py-1 rounded-lg">00:00</span>
+              </div>
+              
+              <!-- Progress Bar -->
+              <div class="w-full bg-zinc-150 dark:bg-zinc-800 h-1.5 rounded-full overflow-hidden" aria-hidden="true">
+                <span id="quiz-progress-bar" class="block h-full bg-indigo-500 w-0 transition-all duration-300"></span>
+              </div>
+
+              <!-- Question text -->
+              <h3 id="question-prompt" class="text-lg font-bold text-zinc-800 dark:text-zinc-100 leading-snug"></h3>
+
+              <!-- Choice Grid (A, B, C, D) -->
+              <div id="choice-grid" class="grid grid-cols-1 gap-2.5"></div>
+
+              <!-- Explanation Feedback -->
+              <p id="feedback-line" class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"></p>
+
+              <!-- Next Button -->
+              <div class="flex justify-end pt-2">
+                <button class="py-2.5 px-6 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all shadow-sm shadow-brand-500/20 hidden" id="next-question" type="button">Next Question</button>
+              </div>
+            </div>
+
+            <!-- STATE C: QUIZ RESULTS -->
+            <div id="quiz-results" class="flex flex-col items-center text-center py-6 space-y-6 hidden">
+              <!-- Score Circle Indicator -->
+              <div id="score-ring" class="w-28 h-28 rounded-full border-4 border-brand-500 flex items-center justify-center text-2xl font-black text-brand-600 dark:text-brand-400 bg-brand-500/5">0%</div>
+              
+              <div class="space-y-1">
+                <h3 id="score-heading" class="text-xl font-bold">Quiz Complete</h3>
+                <p id="score-details" class="text-sm text-zinc-400"></p>
+              </div>
+
+              <div class="flex flex-col sm:flex-row gap-2 border-t border-zinc-100 dark:border-zinc-850 pt-6 w-full justify-center">
+                <button class="py-2.5 px-6 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all" id="quiz-again" type="button">Try Again</button>
+                <button class="py-2.5 px-6 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-xl font-semibold transition-colors" id="quiz-mistakes-only" type="button">Mistakes Only</button>
+                <button class="py-2.5 px-6 bg-transparent border border-zinc-250 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-850 rounded-xl font-semibold transition-colors" id="export-pdf-btn" type="button">Download Study Guide (PDF)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- History panel -->
+          <div class="sidebar-panel bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-sm flex flex-col gap-4 lg:sticky lg:top-[88px] lg:h-[calc(100vh-112px)] overflow-hidden lg:col-span-1">
+            <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3">
+              <div>
+                <h2 class="text-base font-bold">Recent Results</h2>
+                <p class="text-xs text-zinc-400 mt-0.5">Last five attempts</p>
+              </div>
+              <button id="close-history-btn" class="text-zinc-400 hover:text-rose-500 dark:hover:text-rose-400 text-xs font-bold transition-colors p-1" type="button" title="Collapse History">✕</button>
+            </div>
+            <div id="history-list" class="flex-1 space-y-2 overflow-y-auto"></div>
+          </div>
+
+          <!-- Placeholder for Content Explorer -->
+          <div class="explorer-sidebar-placeholder lg:col-span-1"></div>
+
+        </div>
+      </section>
+
+      <!-- VIEW 4: INSIGHTS -->
+      <section class="view hidden flex flex-col gap-6" id="view-insights">
+        
+        <!-- Dashboard Search Bar -->
+        <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col gap-4">
+          <h2 class="text-lg font-bold">Global Dashboard Search</h2>
+          <p class="text-xs text-zinc-400 -mt-2">Search for any word across all languages and lessons and jump directly to the target lesson.</p>
+          <div class="relative flex items-center">
+            <input type="text" id="dashboard-search-input" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl pl-10 pr-10 py-3 outline-none focus:ring-2 focus:ring-brand-500" placeholder="Search for a word, translation, or definition..." />
+            <span class="absolute left-3.5 text-zinc-400 text-sm" aria-hidden="true">🔍</span>
+            <button id="clear-dashboard-search-btn" class="absolute right-3.5 text-zinc-400 hover:text-zinc-650 text-sm hidden" type="button" aria-label="Clear Search">✕</button>
+          </div>
+          
+          <!-- Dashboard Search Results View -->
+          <div id="dashboard-search-results" class="hidden space-y-3 mt-2">
+            <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-850 pb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-zinc-400">Search Results</span>
+              <span id="dashboard-search-results-count" class="status-pill px-2 py-0.5 text-xs font-semibold rounded-full bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-400">0 found</span>
+            </div>
+            <div id="dashboard-search-results-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-72 overflow-y-auto pr-1"></div>
+          </div>
+        </div>
+
+        <div id="insights-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+
+        <!-- Hard Words Section -->
+        <div id="dashboard-hard-words-section" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col gap-4">
+          <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-850 pb-3">
+            <div>
+              <h2 class="text-lg font-bold">Hard Words (Leeches)</h2>
+              <p id="hard-words-subtitle" class="text-xs text-zinc-400 mt-0.5">Words you have made mistakes on 5 or more times. Click on them to study or use AI to simplify them.</p>
+            </div>
+            <span id="dashboard-hard-words-count" class="status-pill px-2.5 py-1 text-xs font-bold rounded-full bg-red-100 text-red-700 dark:bg-red-955/40 dark:text-red-400">0 words</span>
+          </div>
+          <div id="dashboard-hard-words-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Advanced statistics breakdown -->
+        <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col gap-4">
+          <h2 class="text-lg font-bold">Detailed Mastery (Folder Statistics)</h2>
+          <p class="text-xs text-zinc-400 -mt-2">Mastery percentage of words for each language and unit separately.</p>
+          <div id="folder-stats-container" class="space-y-6 mt-2">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+        
+      </section>
+
+    </main>
+
+    <!-- Interactive Spinner loading overlay -->
+    <div id="loading-overlay" class="fixed inset-0 z-50 bg-zinc-950/85 backdrop-blur-sm flex-col items-center justify-center hidden transition-all duration-300">
+      <div class="flex flex-col items-center max-w-sm px-6 text-center">
+        <!-- Spinner animation -->
+        <div class="relative w-16 h-16 mb-4">
+          <div class="absolute inset-0 border-4 border-indigo-500/20 rounded-full"></div>
+          <div class="absolute inset-0 border-4 border-t-indigo-600 rounded-full animate-spin"></div>
+        </div>
+        <!-- Status Content -->
+        <h3 id="loading-title" class="text-lg font-bold text-white mb-2">Processing Study Set</h3>
+        <p id="loading-status" class="text-sm text-zinc-400 mb-6">Analyzing note details...</p>
+        
+        <!-- Progress Bar -->
+        <div class="w-64 bg-zinc-800 rounded-full h-2 overflow-hidden hidden">
+          <div id="loading-progress-bar" class="bg-indigo-500 h-full w-0 transition-all duration-300"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col items-end w-full max-w-xs pointer-events-none"></div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="fixed inset-0 z-50 bg-zinc-950/85 backdrop-blur-sm flex items-center justify-center hidden transition-all duration-300">
+      <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto flex flex-col gap-5">
+        <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3">
+          <h2 class="text-lg font-bold flex items-center gap-1.5">
+            <span>⚙️</span> System Settings
+          </h2>
+          <button id="close-settings-btn" type="button" class="text-zinc-400 hover:text-zinc-650 text-sm">✕</button>
+        </div>
+
+        <div class="space-y-4 flex-1">
+          <!-- API Key Section inside settings -->
+          <div class="space-y-2">
+            <div>
+              <label class="text-xs font-bold text-zinc-600 dark:text-zinc-400" for="settings-api-key-input">HackClub API Key</label>
+              <p class="text-[11px] text-zinc-400">Enables advanced AI generation and multi-language OCR models</p>
+            </div>
+            <input type="password" id="settings-api-key-input" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-brand-500" placeholder="Paste your HackClub API key here..." autocomplete="off" />
+          </div>
+
+          <!-- Engine Mode Selection -->
+          <div class="space-y-2">
+            <label class="text-xs font-bold text-zinc-600 dark:text-zinc-400">Generation Engine</label>
+            <div class="flex gap-2">
+              <label class="flex-1">
+                <input type="radio" class="sr-only peer" name="settings-engine-mode" value="ai" checked />
+                <span class="block text-center text-xs py-2.5 px-3 rounded-lg border border-zinc-200 dark:border-zinc-800 peer-checked:bg-brand-600 peer-checked:text-white dark:peer-checked:bg-brand-500 cursor-pointer transition-colors font-semibold">AI Engine</span>
+              </label>
+              <label class="flex-1">
+                <input type="radio" class="sr-only peer" name="settings-engine-mode" value="local" />
+                <span class="block text-center text-xs py-2.5 px-3 rounded-lg border border-zinc-200 dark:border-zinc-800 peer-checked:bg-brand-600 peer-checked:text-white dark:peer-checked:bg-brand-500 cursor-pointer transition-colors font-semibold">Local Engine</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- API Base URL -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-zinc-600 dark:text-zinc-400" for="settings-api-base-url">API Base URL</label>
+            <input type="text" id="settings-api-base-url" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-brand-500" placeholder="https://ai.hackclub.com/proxy/v1" />
+          </div>
+
+          <!-- Default Model -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-zinc-600 dark:text-zinc-400" for="settings-api-model">Default Model</label>
+            <input type="text" id="settings-api-model" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-brand-500" placeholder="openai/gpt-5.5" />
+          </div>
+
+          <!-- Daily Study Goal -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-zinc-600 dark:text-zinc-400" for="settings-daily-goal">Daily Study Goal (mastered words)</label>
+            <input type="number" id="settings-daily-goal" min="1" max="1000" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-brand-500" />
+          </div>
+
+          <!-- Spaced Repetition (SRS) Settings -->
+          <div class="border-t border-zinc-100 dark:border-zinc-805 pt-4 space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Spaced Repetition & Leech Settings</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Starting Ease -->
+              <div class="space-y-1">
+                <label class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400" for="settings-srs-starting-ease" title="The initial ease factor used for new cards. Higher means interval grows faster.">Starting Ease Factor</label>
+                <input type="number" id="settings-srs-starting-ease" step="0.1" min="1.3" max="5.0" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-brand-500" />
+              </div>
+
+              <!-- Leech Threshold -->
+              <div class="space-y-1">
+                <label class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400" for="settings-srs-leech-threshold" title="Number of Again/incorrect ratings before a card is marked as Leech.">Leech Mistake Threshold</label>
+                <input type="number" id="settings-srs-leech-threshold" min="2" max="50" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-brand-500" />
+              </div>
+
+              <!-- Again Penalty -->
+              <div class="space-y-1">
+                <label class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400" for="settings-srs-again-penalty" title="Decrease in ease factor when rating a card 'Again' (mistake).">Again Ease Penalty</label>
+                <input type="number" id="settings-srs-again-penalty" step="0.01" min="0.0" max="2.0" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-brand-500" />
+              </div>
+
+              <!-- Again Interval Hours -->
+              <div class="space-y-1">
+                <label class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400" for="settings-srs-again-interval" title="How many hours until the card is scheduled to show up again.">Again Interval (Hours)</label>
+                <input type="number" id="settings-srs-again-interval" min="1" max="168" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-brand-500" />
+              </div>
+
+              <!-- Good Ease Bonus -->
+              <div class="space-y-1">
+                <label class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400" for="settings-srs-good-bonus" title="Increase in ease factor when rating a card 'Good'.">Good Ease Bonus</label>
+                <input type="number" id="settings-srs-good-bonus" step="0.01" min="0.0" max="1.0" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-brand-500" />
+              </div>
+
+              <!-- Easy Ease Bonus -->
+              <div class="space-y-1">
+                <label class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400" for="settings-srs-easy-bonus" title="Increase in ease factor when rating a card 'Easy'.">Easy Ease Bonus</label>
+                <input type="number" id="settings-srs-easy-bonus" step="0.01" min="0.0" max="2.0" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-brand-500" />
+              </div>
+
+              <!-- Easy Interval Multiplier -->
+              <div class="space-y-1 sm:col-span-2">
+                <label class="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400" for="settings-srs-easy-multiplier" title="Multiplier applied to next review interval when rating a card 'Easy'.">Easy Interval Multiplier</label>
+                <input type="number" id="settings-srs-easy-multiplier" step="0.1" min="1.0" max="10.0" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-brand-500" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 border-t border-zinc-100 dark:border-zinc-800 pt-4">
+          <button id="save-settings-btn" type="button" class="flex-1 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all shadow-md shadow-brand-500/20">Save Settings</button>
+          <button id="settings-sign-out-btn" type="button" class="px-4 py-2.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-650 dark:text-rose-400 rounded-xl font-semibold transition-colors">Sign Out</button>
+          <button id="reset-settings-defaults-btn" type="button" class="px-4 py-2.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-xl font-semibold transition-all">Defaults</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Modal -->
+    <div id="achievements-modal" class="fixed inset-0 z-50 bg-zinc-950/85 backdrop-blur-sm flex items-center justify-center hidden transition-all duration-300">
+      <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto flex flex-col gap-5">
+        <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3">
+          <h2 class="text-lg font-bold flex items-center gap-1.5">
+            <span>🏆</span> Achievements & Badges
+          </h2>
+          <button id="close-achievements-btn" type="button" class="text-zinc-400 hover:text-zinc-650 text-sm">✕</button>
+        </div>
+
+        <div class="grid grid-cols-1 gap-3 max-h-[60vh] overflow-y-auto pr-1" id="achievements-list">
+          <!-- Unlocked / locked badges will be injected here dynamically -->
+        </div>
+
+        <div class="flex border-t border-zinc-100 dark:border-zinc-800 pt-4">
+          <button id="close-achievements-ok-btn" type="button" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all shadow-md shadow-brand-500/20">Great!</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Lesson Assistant Sidebar -->
+    <div id="ai-chat-sidebar" class="fixed inset-y-0 right-0 z-50 w-full sm:w-[450px] bg-white dark:bg-zinc-900 border-l border-zinc-200 dark:border-zinc-800 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out">
+      <!-- Sidebar Header -->
+      <div class="p-4 border-b border-zinc-150 dark:border-zinc-800 flex items-center justify-between bg-zinc-50 dark:bg-zinc-950">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl leading-none">🤖</span>
+          <div>
+            <h3 class="text-sm font-bold brand-font text-zinc-800 dark:text-zinc-100">AI Lesson Assistant</h3>
+            <p class="text-[10px] text-zinc-400">Discuss vocabulary, definitions, and examples</p>
+          </div>
+        </div>
+        <button id="close-ai-chat-btn" class="p-1.5 text-zinc-400 hover:text-zinc-655 dark:hover:text-zinc-200 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-850 transition-colors" type="button" aria-label="Close Chat">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Messages Thread Panel -->
+      <div id="ai-chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-zinc-50/50 dark:bg-zinc-900/20 flex flex-col">
+        <!-- Welcoming Bubble -->
+        <div class="flex items-start gap-2.5 max-w-[85%] self-start">
+          <div class="w-8 h-8 rounded-lg bg-brand-600 dark:bg-brand-500 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-brand-500/20" aria-hidden="true">AI</div>
+          <div class="bg-zinc-100 dark:bg-zinc-800 p-3.5 rounded-2xl rounded-tl-none border border-zinc-200/50 dark:border-zinc-700/60 text-xs shadow-sm leading-relaxed text-zinc-800 dark:text-zinc-200">
+            <p>مرحباً بك! أنا مساعدك الذكي الخاص بهذا الدرس. يمكنك سؤالي عن معاني الكلمات، أو طلب أمثلة بسيطة عليها. كيف يمكنني مساعدتك اليوم؟</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thinking Indicator -->
+      <div id="ai-chat-thinking" class="px-4 py-3 border-t border-zinc-100 dark:border-zinc-850 bg-white dark:bg-zinc-900 hidden">
+        <div class="flex items-center gap-2 text-zinc-450 dark:text-zinc-400 text-xs font-medium">
+          <span class="inline-flex gap-1">
+            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce"></span>
+            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+          </span>
+          <span>AI is thinking...</span>
+        </div>
+      </div>
+
+      <!-- Input Footer Form -->
+      <form id="ai-chat-form" class="p-3 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex gap-2">
+        <input type="text" id="ai-chat-input" class="flex-1 text-xs bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3.5 py-2.5 outline-none focus:ring-2 focus:ring-brand-500 text-zinc-800 dark:text-zinc-150" placeholder="Type your question..." autocomplete="off" />
+        <button type="submit" id="send-ai-chat-btn" class="p-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all shadow-md shadow-brand-500/20 flex items-center justify-center" aria-label="Send Message">
+          <svg class="w-4 h-4 transform rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+          </svg>
+        </button>
+      </form>
+    </div>
+
+    <!-- AI Chat Backdrop Overlay -->
+    <div id="ai-chat-backdrop" class="fixed inset-0 z-40 bg-zinc-950/40 backdrop-blur-sm hidden transition-opacity duration-300"></div>
+
+    <!-- Subject & Focus Selection Modal -->
+    <div id="subject-focus-modal" class="fixed inset-0 z-50 bg-zinc-950/85 backdrop-blur-sm flex items-center justify-center hidden transition-all duration-300">
+      <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl w-full max-w-md flex flex-col gap-6 relative overflow-hidden">
+        
+        <!-- Header -->
+        <div class="space-y-2 relative z-10">
+          <h2 class="text-xl font-black tracking-tight text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
+            <span>📚</span>
+            <span>Customize Subject & Focus Type</span>
+          </h2>
+          <p class="text-xs text-zinc-500 dark:text-zinc-400">
+            Select the study subject and question focus to customize generation.
+          </p>
+        </div>
+
+        <!-- Auto-Detect Alert Banner -->
+        <div id="subject-auto-detect-banner" class="hidden p-3.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-450 rounded-2xl flex items-center gap-2 text-xs font-semibold relative z-10">
+          <span class="text-sm">✨</span>
+          <span>Auto-detected Subject: <strong id="detected-subject-name" class="font-extrabold underline decoration-wavy decoration-emerald-400"></strong></span>
+        </div>
+
+        <!-- Fields Form -->
+        <div class="space-y-4 relative z-10">
+          <!-- Subject selection -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-zinc-500 dark:text-zinc-400" for="modal-subject-select">Study Subject</label>
+            <select id="modal-subject-select" class="w-full text-xs bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-brand-500 text-zinc-850 dark:text-zinc-150">
+              <option value="" disabled selected>Select Subject...</option>
+              <option value="English">English</option>
+              <option value="German">German</option>
+              <option value="Chemistry">Chemistry</option>
+              <option value="French">French</option>
+              <option value="Physics">Physics</option>
+              <option value="Biology">Biology</option>
+              <option value="Math">Math</option>
+              <option value="Mechanics">Mechanics</option>
+            </select>
+          </div>
+
+          <!-- Focus Area selection -->
+          <div class="space-y-1.5" id="modal-focus-container">
+            <label class="text-xs font-bold text-zinc-500 dark:text-zinc-400" for="modal-focus-select">Question Focus</label>
+            <select id="modal-focus-select" class="w-full text-xs bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-brand-500 text-zinc-855 dark:text-zinc-150" disabled>
+              <option value="" disabled selected>Select Focus...</option>
+            </select>
+          </div>
+
+          <!-- Modal Output Type -->
+          <fieldset class="space-y-2" id="modal-output-type-group">
+            <legend class="text-xs font-bold uppercase tracking-wider text-zinc-455 dark:text-zinc-400">Include in Study Set</legend>
+            <div class="grid grid-cols-3 gap-2">
+              <label class="cursor-pointer">
+                <input type="checkbox" class="sr-only peer" id="modal-include-flashcards" checked />
+                <span class="block text-center text-xs py-2 px-1 rounded-xl border border-zinc-200 dark:border-zinc-800 peer-checked:bg-brand-600 peer-checked:text-white dark:peer-checked:bg-brand-500 transition-colors font-medium">Flashcards</span>
+              </label>
+              <label class="cursor-pointer">
+                <input type="checkbox" class="sr-only peer" id="modal-include-quiz" checked />
+                <span class="block text-center text-xs py-2 px-1 rounded-xl border border-zinc-200 dark:border-zinc-800 peer-checked:bg-brand-600 peer-checked:text-white dark:peer-checked:bg-brand-500 transition-colors font-medium">Quiz</span>
+              </label>
+              <label class="cursor-pointer">
+                <input type="checkbox" class="sr-only peer" id="modal-include-summary" checked />
+                <span class="block text-center text-xs py-2 px-1 rounded-xl border border-zinc-200 dark:border-zinc-800 peer-checked:bg-brand-600 peer-checked:text-white dark:peer-checked:bg-brand-500 transition-colors font-medium">Summary</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Modal Count Mode -->
+          <fieldset class="space-y-2" id="modal-question-count-group">
+            <legend class="text-xs font-bold uppercase tracking-wider text-zinc-450 dark:text-zinc-400">Count Mode</legend>
+            <div class="flex gap-2">
+              <label class="flex-1">
+                <input type="radio" class="sr-only peer" name="modal-question-count-mode" value="per-word" checked />
+                <span id="modal-count-mode-per-word-label" class="block text-center text-xs py-2.5 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 peer-checked:bg-brand-600 peer-checked:text-white dark:peer-checked:bg-brand-500 cursor-pointer transition-colors">Per Word</span>
+              </label>
+              <label class="flex-1">
+                <input type="radio" class="sr-only peer" name="modal-question-count-mode" value="total" />
+                <span class="block text-center text-xs py-2.5 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 peer-checked:bg-brand-600 peer-checked:text-white dark:peer-checked:bg-brand-500 cursor-pointer transition-colors">Total</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Modal Question Inputs (Numeric Options) -->
+          <div class="grid grid-cols-1 gap-4">
+            <div id="modal-per-word-control" class="flex flex-col gap-1.5">
+              <label id="modal-per-word-count-label" class="text-xs font-semibold text-zinc-500 dark:text-zinc-400" for="modal-per-word-count">Questions per Vocabulary Word</label>
+              <input type="number" id="modal-per-word-count" min="1" max="50" value="2" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-brand-500" />
+            </div>
+            <div id="modal-total-control" class="flex-col gap-1.5 hidden">
+              <label class="text-xs font-semibold text-zinc-500 dark:text-zinc-400" for="modal-total-questions">Total Questions Limit</label>
+              <input type="number" id="modal-total-questions" min="1" max="5000" value="30" class="w-full text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-brand-500" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-2.5 border-t border-zinc-100 dark:border-zinc-800 pt-4 relative z-10">
+          <button id="confirm-subject-focus-btn" type="button" disabled class="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all shadow-md shadow-brand-500/25 text-xs uppercase tracking-wider">
+            Confirm & Generate
+          </button>
+          <button id="cancel-subject-focus-btn" type="button" class="px-4 py-3 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-xl font-semibold transition-all text-xs">
+            Cancel
+          </button>
+        </div>
+
+        <!-- Decorative background shapes -->
+        <div class="absolute -right-16 -top-16 w-36 h-36 bg-brand-500/5 rounded-full blur-xl" aria-hidden="true"></div>
+        <div class="absolute -left-16 -bottom-16 w-36 h-36 bg-indigo-500/5 rounded-full blur-xl" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Authentication Overlay -->
+    <div id="auth-overlay" class="fixed inset-0 z-50 bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center hidden">
+      <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl w-full max-w-md flex flex-col gap-6 relative overflow-hidden">
+        <!-- Logo and Header -->
+        <div class="text-center space-y-2 relative z-10">
+          <div class="w-12 h-12 bg-brand-600 dark:bg-brand-500 rounded-2xl flex items-center justify-center text-white font-extrabold text-xl mx-auto shadow-lg shadow-brand-500/25 brand-font" aria-hidden="true">S</div>
+          <h2 class="text-2xl font-black tracking-tight text-zinc-800 dark:text-zinc-100" id="auth-title">Welcome to Smart Flashcards</h2>
+          <p class="text-xs text-zinc-400 dark:text-zinc-500" id="auth-subtitle">Sign in to sync and study your vocabulary</p>
+        </div>
+
+        <!-- Auth Form -->
+        <form id="auth-form" class="space-y-4 relative z-10">
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-zinc-500 dark:text-zinc-450" for="auth-username">Username</label>
+            <input type="text" id="auth-username" required class="w-full text-xs bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-brand-500 text-zinc-800 dark:text-zinc-150" placeholder="Enter username..." autocomplete="username" />
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-zinc-500 dark:text-zinc-450" for="auth-password">Password</label>
+            <input type="password" id="auth-password" required class="w-full text-xs bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-brand-500 text-zinc-800 dark:text-zinc-150" placeholder="Enter password..." autocomplete="current-password" />
+          </div>
+
+          <button type="submit" id="auth-submit-btn" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all shadow-md shadow-brand-500/20 text-xs uppercase tracking-wider mt-2">Sign In</button>
+        </form>
+
+        <!-- Toggle Auth Mode link -->
+        <p class="text-center text-xs text-zinc-500 dark:text-zinc-450 relative z-10">
+          <span id="auth-toggle-msg">Don't have an account?</span>
+          <button type="button" id="auth-toggle-btn" class="text-brand-600 dark:text-brand-400 font-extrabold hover:underline ml-1">Create Account</button>
+        </p>
+
+        <!-- Background shapes -->
+        <div class="absolute -right-16 -top-16 w-36 h-36 bg-brand-500/5 rounded-full blur-xl"></div>
+        <div class="absolute -left-16 -bottom-16 w-36 h-36 bg-indigo-500/5 rounded-full blur-xl"></div>
+      </div>
+    </div>
+
+    <script type="module" src="/js/app.js?v=9"></script>
+  </body>
+</html>
