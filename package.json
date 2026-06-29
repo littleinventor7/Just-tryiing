@@ -1,0 +1,15 @@
+{
+  "name": "smart-flashcards-quiz-generator",
+  "version": "1.0.0",
+  "description": "A polished local web app for extracting vocabulary, generating flashcards, and creating diverse quizzes.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "test": "node backend/self-test.js",
+    "tutor": "python multilingual_embedded_nlp_tutor.py"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
