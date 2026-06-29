@@ -5,7 +5,8 @@ import {
   generateWithGemini,
   extractWordsFromImageWithGemini,
   askLessonAssistant,
-  detectSubject
+  detectSubject,
+  extractFileContentAi
 } from "./api.js";
 import { extractFileContent, fileToBase64 } from "./fileReaders.js";
 import { downloadJson, loadState, saveState, createEmptyState, normalizeLoadedSets } from "./storage.js";
@@ -23,6 +24,7 @@ import {
   toggleLearned,
   deleteCurrentTerm,
   deleteTerm,
+  deleteQuestion,
   deleteAllWords,
   checkAndUpdateStreak,
   getSrsStatusText,
@@ -71,7 +73,8 @@ import {
   escapeHtml,
   sanitizeQuestionHtml,
   clamp,
-  shuffle
+  shuffle,
+  registerSwitchViewCallback
 } from "./ui-shared.js";
 
 let pendingSubject = null;
@@ -163,6 +166,9 @@ function updateModalLabelsAndVisibility() {
 
 export function init() {
   registerRenderAll(renderAll);
+  registerSwitchViewCallback((viewName) => {
+    renderExplorer();
+  });
   cacheDom();
   bindEvents();
   registerCallbacks();
@@ -269,20 +275,30 @@ function bindEvents() {
     dom.deleteAllWords.addEventListener("click", () => {
       const lesson = currentLesson();
       if (lesson) {
-        if (confirm(`Are you sure you want to delete all words in "${lesson.name}"? This cannot be undone.`)) {
-          if (lesson.terms) {
-            lesson.terms.forEach(t => {
-              appState.state.learned.delete(t.id);
-              appState.state.mistakes.delete(t.id);
-            });
-            lesson.terms = [];
+        const isQuizView = (appState.activeView === "quiz");
+        if (isQuizView) {
+          if (confirm(`Are you sure you want to delete all questions in "${lesson.name}"? This cannot be undone.`)) {
+            lesson.questions = [];
+            persist();
+            notifyStateChange();
+            showToast("Deleted all questions in current lesson.", "info");
           }
-          lesson.questions = [];
-          appState.state.activeIndex = 0;
-          appState.studyTerms = null; // force reload
-          persist();
-          notifyStateChange();
-          showToast("Deleted all words in current lesson.", "info");
+        } else {
+          if (confirm(`Are you sure you want to delete all words in "${lesson.name}"? This cannot be undone.`)) {
+            if (lesson.terms) {
+              lesson.terms.forEach(t => {
+                appState.state.learned.delete(t.id);
+                appState.state.mistakes.delete(t.id);
+              });
+              lesson.terms = [];
+            }
+            lesson.questions = [];
+            appState.state.activeIndex = 0;
+            appState.studyTerms = null; // force reload
+            persist();
+            notifyStateChange();
+            showToast("Deleted all words in current lesson.", "info");
+          }
         }
       }
     });
@@ -304,6 +320,20 @@ function bindEvents() {
   }
   if (dom.clearBlueprint) {
     dom.clearBlueprint.addEventListener("click", clearBlueprintFile);
+  }
+
+  if (dom.useSavedTextBtn) {
+    dom.useSavedTextBtn.addEventListener("click", () => {
+      const lesson = currentLesson();
+      if (lesson && lesson.sourceText) {
+        if (dom.textInput) {
+          dom.textInput.value = lesson.sourceText;
+        }
+        showToast("Loaded text from the current lesson.", "success");
+      } else {
+        showToast("No text saved in the current lesson.", "warning");
+      }
+    });
   }
 
   // Settings API key panel
@@ -834,91 +864,92 @@ async function processStudySet() {
   let detectedLesson = null;
 
   try {
-    // OCR Extraction
-    if (appState.selectedFileMedia && text.length < 3 && !manual.length) {
-      if (!isAiEngine) {
-        throw new Error("OCR extraction requires AI Engine. Please switch Generation Engine to AI in Settings.");
-      }
-      if (!userApiKey) {
-        throw new Error("API key required for scanned document or image OCR processing.");
-      }
-      showLoading("Generating Study Set", "Performing OCR and extracting vocabulary terms via AI...");
-      const ocrResult = await extractWordsFromImageWithGemini(appState.selectedFileMedia);
-      const extractedTerms = ocrResult.terms || [];
-      if (!extractedTerms.length) {
-         throw new Error("No vocabulary terms could be extracted from this image.");
-      }
-      detectedLanguage = ocrResult.detectedLanguage || detectedLanguage;
-      detectedUnit = ocrResult.detectedUnit || detectedUnit;
-      detectedLesson = ocrResult.detectedLesson || detectedLesson;
-      finalTerms = buildTermsFromRows(extractedTerms, { maxTerms });
-    } else {
-      if (manual.length > 0) {
-        finalTerms = buildTermsFromRows(manual, { maxTerms });
-      } else {
-        showLoading("Generating Study Set", "Analyzing input text locally...");
-        const result = await processVocabulary({ 
-          text, 
-          maxTerms, 
-          difficulty, 
-          perWord, 
-          quizFocus: focus, 
-          subject: chosenSubject, 
-          focusType: chosenFocusType,
-          contentType: outputType
-        });
-        finalTerms = buildTermsFromRows(result.terms || [], { maxTerms });
-        detectedLanguage = result.detectedLanguage || detectedLanguage;
-        detectedUnit = result.detectedUnit || detectedUnit;
-        detectedLesson = result.detectedLesson || detectedLesson;
-        finalSummary = result.summary || finalSummary;
-      }
-    }
-
-    // AI Question & Flashcard Enrichment
-    if (isAiEngine && userApiKey && (manual.length > 0 || text.length >= 3 || appState.selectedFileMedia)) {
-      showLoading("Enriching Study Set", "Gemini is generating quizzes & translating terms...");
-      
-      let blueprintExamText = "";
-      let blueprintImage = null;
+    // Blueprint retrieval helper
+    let blueprintExamText = "";
+    let blueprintImage = null;
+    const fetchBlueprint = async () => {
       if (appState.blueprintFiles.length > 0) {
         const file = appState.blueprintFiles[0];
         if (file.type === "application/pdf") {
           const base64 = await fileToBase64(file);
-          const extRes = await extractPdfFile({ fileName: file.name, mimeType: file.type, data: base64 });
+          let extRes = { text: "" };
+          try {
+            extRes = await extractPdfFile({ fileName: file.name, mimeType: file.type, data: base64 });
+          } catch (err) {
+            console.warn("Local blueprint PDF text extraction failed.", err);
+          }
           blueprintExamText = extRes.text || "";
+          if (blueprintExamText.trim().length < 3) {
+            blueprintImage = { mimeType: file.type, data: base64, filename: file.name };
+          }
         } else if (file.type.startsWith("image/")) {
           const base64 = await fileToBase64(file);
           blueprintImage = { mimeType: file.type, data: base64 };
         }
       }
+    };
 
-      const aiResponse = await generateWithGemini({
-        examText: blueprintExamText,
-        terms: finalTerms,
-        quizFocus: focus,
-        subject: chosenSubject,
+    const userInstructions = (dom.aiInstructions?.value || "").trim();
+
+    if (manual.length > 0) {
+      finalTerms = buildTermsFromRows(manual, { maxTerms });
+      
+      if (isAiEngine && userApiKey) {
+        showLoading("Generating AI Set", "Gemini is generating quizzes & translating terms from manual vocabulary...");
+        await fetchBlueprint();
+        const aiResponse = await generateWithGemini({
+          examText: blueprintExamText,
+          terms: finalTerms,
+          quizFocus: focus,
+          subject: chosenSubject,
+          focusType: chosenFocusType,
+          perWord,
+          media: appState.selectedFileMedia,
+          blueprintMedia: blueprintImage,
+          contentType: outputType,
+          sourceText: text,
+          userInstructions
+        });
+
+        if (aiResponse.terms && aiResponse.terms.length > 0) {
+          finalTerms = aiResponse.terms;
+        }
+        finalQuestions = aiResponse.questions || [];
+        detectedLanguage = aiResponse.detectedLanguage || detectedLanguage;
+        detectedUnit = aiResponse.detectedUnit || detectedUnit;
+        detectedLesson = aiResponse.detectedLesson || detectedLesson;
+        finalSummary = aiResponse.summary || finalSummary;
+      } else {
+        showLoading("Generating Local Set", "Building standard questions locally...");
+        const fallbackResult = await regenerateQuiz(finalTerms, perWord, focus, "");
+        finalQuestions = fallbackResult.questions || [];
+        finalSummary = `Local extraction: generated ${finalTerms.length} flashcards from the provided manual vocabulary.`;
+      }
+    } else {
+      // Direct File/Text processing
+      showLoading("Generating Study Set", isAiEngine ? "Generating study set via AI..." : "Analyzing input text locally...");
+      await fetchBlueprint();
+      const result = await processVocabulary({ 
+        text, 
+        maxTerms, 
+        difficulty, 
+        perWord, 
+        quizFocus: focus, 
+        subject: chosenSubject, 
         focusType: chosenFocusType,
-        perWord,
+        contentType: outputType,
         media: appState.selectedFileMedia,
         blueprintMedia: blueprintImage,
-        contentType: outputType
+        examText: blueprintExamText,
+        userInstructions
       });
 
-      if (aiResponse.terms && aiResponse.terms.length > 0) {
-        finalTerms = aiResponse.terms;
-      }
-      finalQuestions = aiResponse.questions || [];
-      detectedLanguage = aiResponse.detectedLanguage || detectedLanguage;
-      detectedUnit = aiResponse.detectedUnit || detectedUnit;
-      detectedLesson = aiResponse.detectedLesson || detectedLesson;
-      finalSummary = aiResponse.summary || finalSummary;
-    } else {
-      // Local fallback
-      showLoading("Generating Local Set", "Building standard questions locally...");
-      const fallbackResult = await regenerateQuiz(finalTerms, perWord, focus, "");
-      finalQuestions = fallbackResult.questions || [];
-      finalSummary = `Local extraction: generated ${finalTerms.length} flashcards from the provided material.`;
+      finalTerms = result.terms || [];
+      finalQuestions = result.questions || [];
+      detectedLanguage = result.detectedLanguage || detectedLanguage;
+      detectedUnit = result.detectedUnit || detectedUnit;
+      detectedLesson = result.detectedLesson || detectedLesson;
+      finalSummary = result.summary || finalSummary;
     }
 
     // Folder structural save
@@ -926,6 +957,7 @@ async function processStudySet() {
     lesson.terms = finalTerms;
     lesson.questions = finalQuestions;
     lesson.summary = finalSummary || lesson.summary || null;
+    lesson.sourceText = text || "";
     
     appState.state.activeIndex = 0;
     appState.cardFlipped = false;
@@ -978,48 +1010,76 @@ async function processUploadedFile(file) {
   }
 
   try {
-    if (file.type === "application/pdf") {
-      const base64 = await fileToBase64(file);
-      let extRes = { text: "" };
-      try {
-        extRes = await extractPdfFile({ fileName: file.name, mimeType: file.type, data: base64 });
-      } catch (err) {
-        console.warn("Local PDF text extraction failed. OCR fallback will be used if needed.", err);
+    const isAiEngine = (appState.state.settings?.engineMode || "ai") === "ai";
+    const isPdfOrImage = file.type === "application/pdf" || file.type.startsWith("image/");
+
+    if (isAiEngine && isPdfOrImage) {
+      const userApiKey = localStorage.getItem("hackclub-api-key") || 
+                        localStorage.getItem("hackclub_api_key") || 
+                        localStorage.getItem("gemini-api-key") || 
+                        localStorage.getItem("gemini_api_key");
+      if (!userApiKey) {
+        throw new Error("An API key is required to extract file contents using the AI. Please save your API key in Settings first.");
       }
-      appState.selectedFileText = extRes.text || "";
-      if (appState.selectedFileText.trim().length < 3) {
-        appState.selectedFileMedia = { mimeType: file.type, data: base64, filename: file.name };
-      } else {
-        appState.selectedFileMedia = null;
-      }
-    } else if (file.type.startsWith("image/")) {
+
+      showLoading("Reading File via AI", `Sending "${file.name}" to AI to extract all text, tables, and formulas...`);
       const base64 = await fileToBase64(file);
-      appState.selectedFileMedia = { mimeType: file.type, data: base64 };
-      appState.selectedFileText = "";
+      const mediaPayload = { mimeType: file.type, data: base64, filename: file.name };
+      const userInstructions = (dom.aiInstructions?.value || "").trim();
+      
+      const extRes = await extractFileContentAi(mediaPayload, userInstructions);
+      const extractedText = extRes.extractedText || "";
+
+      appState.selectedFileText = extractedText;
+      appState.selectedFileMedia = mediaPayload;
+
+      if (dom.textInput) {
+        dom.textInput.value = extractedText;
+      }
     } else {
-      // Plain text or CSV
-      const content = await extractFileContent(file);
-      const textVal = (typeof content === "string" ? content : content?.text) || "";
-      appState.selectedFileText = textVal;
-      
-      // Preserve media if the file reader returned it (e.g. image with wrong extension)
-      if (content?.media) {
-        appState.selectedFileMedia = content.media;
+      if (file.type === "application/pdf") {
+        const base64 = await fileToBase64(file);
+        let extRes = { text: "" };
+        try {
+          extRes = await extractPdfFile({ fileName: file.name, mimeType: file.type, data: base64 });
+        } catch (err) {
+          console.warn("Local PDF text extraction failed. OCR fallback will be used if needed.", err);
+        }
+        appState.selectedFileText = extRes.text || "";
+        if (appState.selectedFileText.trim().length < 3) {
+          appState.selectedFileMedia = { mimeType: file.type, data: base64, filename: file.name };
+        } else {
+          appState.selectedFileMedia = null;
+        }
+      } else if (file.type.startsWith("image/")) {
+        const base64 = await fileToBase64(file);
+        appState.selectedFileMedia = { mimeType: file.type, data: base64 };
+        appState.selectedFileText = "";
       } else {
-        appState.selectedFileMedia = null;
-      }
-      
-      if (content?.rows && content.rows.length > 0) {
-        appState.manualRows = content.rows.map(normalizeRow);
-        renderManualRows();
-        showToast(`Extracted ${content.rows.length} table rows from DOCX.`, "success");
-      } else {
-        // Parse CSV/TSV table directly if applicable
-        const parsed = parseDelimitedRows(textVal);
-        if (parsed.length > 0) {
-          appState.manualRows = parsed.map(normalizeRow);
+        // Plain text or CSV
+        const content = await extractFileContent(file);
+        const textVal = (typeof content === "string" ? content : content?.text) || "";
+        appState.selectedFileText = textVal;
+        
+        // Preserve media if the file reader returned it (e.g. image with wrong extension)
+        if (content?.media) {
+          appState.selectedFileMedia = content.media;
+        } else {
+          appState.selectedFileMedia = null;
+        }
+        
+        if (content?.rows && content.rows.length > 0) {
+          appState.manualRows = content.rows.map(normalizeRow);
           renderManualRows();
-          showToast("Delimited text parsed into manual vocabulary table.", "success");
+          showToast(`Extracted ${content.rows.length} table rows from DOCX.`, "success");
+        } else {
+          // Parse CSV/TSV table directly if applicable
+          const parsed = parseDelimitedRows(textVal);
+          if (parsed.length > 0) {
+            appState.manualRows = parsed.map(normalizeRow);
+            renderManualRows();
+            showToast("Delimited text parsed into manual vocabulary table.", "success");
+          }
         }
       }
     }
@@ -1406,6 +1466,21 @@ function renderImport() {
   if (dom.clearBlueprint) {
     dom.clearBlueprint.disabled = !appState.blueprintFiles.length;
   }
+
+  if (dom.useSavedTextBtn) {
+    const lesson = currentLesson();
+    if (lesson && lesson.sourceText && lesson.sourceText.trim()) {
+      dom.useSavedTextBtn.classList.remove("hidden");
+    } else {
+      dom.useSavedTextBtn.classList.add("hidden");
+    }
+  }
+
+  // Show/hide AI instructions container based on engine mode
+  if (dom.aiInstructionsContainer) {
+    const isAi = (appState.state.settings?.engineMode || "ai") === "ai";
+    dom.aiInstructionsContainer.classList.toggle("hidden", !isAi);
+  }
 }
 
 async function renderQuizHome() {
@@ -1422,7 +1497,92 @@ async function renderQuizHome() {
   if (dom.exportPdfBtn) dom.exportPdfBtn.disabled = !hasQuestions;
   if (dom.exportPdfBtnSetup) dom.exportPdfBtnSetup.disabled = !hasQuestions;
   
+  if (dom.quizQuestionsPanel) {
+    dom.quizQuestionsPanel.classList.toggle("hidden", !hasQuestions);
+  }
+  renderQuestionsList(questions);
+  
   renderHistory();
+}
+
+function renderQuestionsList(questions) {
+  if (!dom.quizQuestionsList) return;
+  if (dom.quizSetupQuestionsCount) {
+    dom.quizSetupQuestionsCount.textContent = `${questions.length} questions`;
+  }
+
+  if (!questions.length) {
+    dom.quizQuestionsList.innerHTML = `<div class="text-center py-6 text-zinc-400 text-sm">No questions currently in this lesson. Generate a study set to create some.</div>`;
+    return;
+  }
+
+  dom.quizQuestionsList.innerHTML = questions
+    .map((q, idx) => {
+      const typeLabels = {
+        context: "Context Completion",
+        synonym: "Synonym",
+        antonym: "Antonym",
+        definition: "Definition",
+        fine_distinction: "Fine Distinction",
+        indigo_context: "STEM Context",
+        stem_context: "STEM Context",
+        paraphrase: "Paraphrasing",
+        contextual_translation: "Contextual Translation"
+      };
+
+      const typeLabel = typeLabels[q.type] || q.typeLabel || q.type;
+
+      return `
+        <div class="p-3 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-900/60 transition-all flex items-start gap-3 relative group" data-question-id="${q.id}">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+              <span class="text-xs font-bold text-brand-600 dark:text-brand-400">Q${idx + 1}</span>
+              <span class="px-2 py-0.5 text-[9px] font-bold rounded-full bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-400 uppercase tracking-wider">${escapeHtml(typeLabel)}</span>
+              ${q.word ? `<span class="px-1.5 py-0.5 text-[9px] font-semibold rounded bg-zinc-200/50 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-300 font-extrabold">Word: <strong class="text-brand-600 dark:text-brand-400 font-extrabold">${escapeHtml(q.word)}</strong></span>` : ""}
+            </div>
+            <p class="text-xs font-medium text-zinc-700 dark:text-zinc-200 leading-snug mb-2">${sanitizeQuestionHtml(q.prompt)}</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-2">
+              ${q.choices.map((choice, cIdx) => {
+                const isCorrect = cIdx === q.answerIndex;
+                const borderClass = isCorrect 
+                  ? "border-emerald-250 bg-emerald-500/10 text-emerald-700 dark:border-emerald-950/30 dark:bg-emerald-950/20 dark:text-emerald-450 font-semibold" 
+                  : "border-zinc-250 dark:border-zinc-800/80 text-zinc-500 dark:text-zinc-400";
+                return `
+                  <div class="px-2.5 py-1 text-[10px] rounded-lg border ${borderClass} truncate flex items-center gap-1.5">
+                    <span class="text-[9px] font-bold uppercase ${isCorrect ? 'text-emerald-500 dark:text-emerald-400' : 'text-zinc-450'}">${String.fromCharCode(65 + cIdx)}.</span>
+                    <span class="truncate">${escapeHtml(choice)}</span>
+                    ${isCorrect ? '<span class="text-emerald-600 dark:text-emerald-400 font-extrabold ml-auto">✓</span>' : ""}
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          </div>
+          <button type="button" class="text-zinc-400 hover:text-rose-500 p-1 rounded hover:bg-zinc-200/50 dark:hover:bg-zinc-800/60 transition-all self-start md:opacity-0 md:group-hover:opacity-100" data-delete-question="${q.id}" title="Delete Question">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </button>
+        </div>
+      `;
+    })
+    .join("");
+
+  // Add click handlers for delete buttons
+  dom.quizQuestionsList.querySelectorAll("[data-delete-question]").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const questionId = btn.dataset.deleteQuestion;
+      if (confirm("Are you sure you want to delete this question?")) {
+        deleteQuestion(questionId);
+        showToast("Question deleted.", "success");
+        const lesson = currentLesson();
+        if (lesson) {
+          renderQuestionsList(lesson.questions || []);
+          renderQuizHome();
+        }
+      }
+    });
+  });
 }
 
 // Settings Modal functions
@@ -1800,8 +1960,8 @@ function initAuth() {
   // Check if there is an active session
   const activeUser = localStorage.getItem("smart-flashcards-active-user");
   if (activeUser) {
-    appState.currentUser = activeUser;
-    const cachedState = loadState(activeUser);
+    appState.currentUser = activeUser === "guest" ? "" : activeUser;
+    const cachedState = loadState(appState.currentUser);
     appState.state = normalizeLoadedSets(cachedState);
     
     // Hide auth screen
@@ -1815,7 +1975,8 @@ function initAuth() {
   // Sign out button
   if (dom.signOutBtn) {
     dom.signOutBtn.addEventListener("click", () => {
-      if (confirm("Are you sure you want to sign out? Your progress is backed up on the server.")) {
+      const isGuest = localStorage.getItem("smart-flashcards-active-user") === "guest";
+      if (isGuest || confirm("Are you sure you want to sign out? Your progress is backed up on the server.")) {
         handleSignOut();
       }
     });
@@ -1824,10 +1985,24 @@ function initAuth() {
   // Settings sign out button
   if (dom.settingsSignOutBtn) {
     dom.settingsSignOutBtn.addEventListener("click", () => {
-      if (confirm("Are you sure you want to sign out? Your progress is backed up on the server.")) {
+      const isGuest = localStorage.getItem("smart-flashcards-active-user") === "guest";
+      if (isGuest || confirm("Are you sure you want to sign out? Your progress is backed up on the server.")) {
         closeSettingsModal();
         handleSignOut();
       }
+    });
+  }
+
+  // Continue Offline (Guest) button
+  if (dom.authGuestBtn) {
+    dom.authGuestBtn.addEventListener("click", () => {
+      localStorage.setItem("smart-flashcards-active-user", "guest");
+      appState.currentUser = "";
+      const cachedState = loadState("");
+      appState.state = normalizeLoadedSets(cachedState);
+      if (dom.authOverlay) dom.authOverlay.classList.add("hidden");
+      renderAll();
+      switchView("home");
     });
   }
 
@@ -1851,6 +2026,45 @@ function initAuth() {
     });
   }
 
+  function clientRegister(username, password) {
+    const users = JSON.parse(localStorage.getItem("smart-flashcards-local-users") || "{}");
+    const cleanUser = username.trim().toLowerCase();
+    
+    if (users[cleanUser]) {
+      throw new Error("Username is already taken.");
+    }
+    
+    users[cleanUser] = { password };
+    localStorage.setItem("smart-flashcards-local-users", JSON.stringify(users));
+    
+    const stateKey = `smart-flashcards-state-user-${cleanUser}`;
+    if (!localStorage.getItem(stateKey)) {
+      localStorage.setItem(stateKey, JSON.stringify({}));
+    }
+    
+    return { username: cleanUser, state: {} };
+  }
+
+  function clientLogin(username, password) {
+    const users = JSON.parse(localStorage.getItem("smart-flashcards-local-users") || "{}");
+    const cleanUser = username.trim().toLowerCase();
+    
+    const record = users[cleanUser];
+    if (!record || record.password !== password) {
+      throw new Error("Invalid username or password.");
+    }
+    
+    const stateKey = `smart-flashcards-state-user-${cleanUser}`;
+    let stateData = {};
+    try {
+      stateData = JSON.parse(localStorage.getItem(stateKey) || "{}");
+    } catch {
+      stateData = {};
+    }
+    
+    return { username: cleanUser, state: stateData };
+  }
+
   // Form submit
   if (dom.authForm) {
     dom.authForm.addEventListener("submit", async (e) => {
@@ -1866,20 +2080,15 @@ function initAuth() {
       }
 
       const isRegister = dom.authSubmitBtn.textContent.trim() === "Create Account";
-      const endpoint = isRegister ? "/api/register" : "/api/login";
 
       showLoading(isRegister ? "Creating Account..." : "Signing In...", "Authenticating credentials...");
 
       try {
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password })
-        });
-
-        const payload = await response.json();
-        if (!response.ok) {
-          throw new Error(payload.error || "Authentication failed.");
+        let payload;
+        if (isRegister) {
+          payload = clientRegister(username, password);
+        } else {
+          payload = clientLogin(username, password);
         }
 
         showToast(isRegister ? "Account created successfully!" : "Signed in successfully!", "success");
@@ -1894,6 +2103,13 @@ function initAuth() {
 
         saveState(userState, payload.username);
         appState.state = normalizeLoadedSets(userState);
+
+        // Optional background sync (no-op on backend)
+        fetch("/api/save-state", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: payload.username, state: userState })
+        }).catch(() => {});
 
         dom.authPassword.value = "";
 
